@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '@/common';
 import type { User } from '@/types';
+import config from '@/config';
 
 export default function useLogin() {
 	const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ export default function useLogin() {
 		setLoading(true);
 		try {
 			// Replace with your API endpoint
-			const res = await fetch('https://arvindwfm.clay.in:5077/api/Login/GetLogin', {
+			const res = await fetch(`${config.API_URL}/Login/GetLogin`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

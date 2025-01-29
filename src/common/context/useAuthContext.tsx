@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import axios, { AxiosError } from 'axios';
+import config from '@/config';
 
 // Define the User type based on your new API response
 type User = {
@@ -60,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const login = async (email: string, password: string): Promise<{ status: number; message?: string }> => {
 		try {
 			// Call your login API
-			const response = await axios.post('https://arvindwfm.clay.in:5077/api/Login/Getlogin', {
+			const response = await axios.post(`${config.API_URL}/Login/Getlogin`, {
 				email,
 				password,
 			});

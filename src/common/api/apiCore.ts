@@ -66,8 +66,8 @@ class APICore {
 		if (params) {
 			const queryString = params
 				? Object.keys(params)
-						.map((key) => key + '=' + params[key])
-						.join('&')
+					.map((key) => key + '=' + params[key])
+					.join('&')
 				: ''
 			response = axios.get(`${url}?${queryString}`, params)
 		} else {
@@ -81,8 +81,8 @@ class APICore {
 		if (params) {
 			const queryString = params
 				? Object.keys(params)
-						.map((key) => key + '=' + params[key])
-						.join('&')
+					.map((key) => key + '=' + params[key])
+					.join('&')
 				: ''
 			response = axios.get(`${url}?${queryString}`, { responseType: 'blob' })
 		} else {
@@ -97,8 +97,8 @@ class APICore {
 		if (params) {
 			queryString = params
 				? Object.keys(params)
-						.map((key) => key + '=' + params[key])
-						.join('&')
+					.map((key) => key + '=' + params[key])
+					.join('&')
 				: ''
 		}
 
