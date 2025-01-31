@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'https://rbac-modal.netlify.app/', // Adjust this to match your GitHub repo name with leading and trailing slashes
+  base: '', // Adjust this to match your GitHub repo name with leading and trailing slashes
   plugins: [react()],
   server: {
     port: 3000,
