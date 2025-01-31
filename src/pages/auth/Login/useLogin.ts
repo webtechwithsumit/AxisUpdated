@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '@/common';
-import type { User } from '@/types';
+// import type { User } from '@/types'
 import config from '@/config';
 
 export default function useLogin() {
@@ -11,19 +11,18 @@ export default function useLogin() {
 
 	const { isAuthenticated, saveSession } = useAuthContext();
 
+	// Determine redirect URL after login
 	const redirectUrl = useMemo(
-		() =>
-			location.state && location.state.from
-				? location.state.from.pathname
-				: '/',
+		() => (location.state && location.state.from ? location.state.from.pathname : '/'),
 		[location.state]
 	);
 
-	const login = async ({ email, password }: User) => {
+	// Login function
+	const login = async ({ email, password }: { email: string; password: string }) => {
 		setLoading(true);
 		try {
-			// Replace with your API endpoint
-			const res = await fetch(`${config.API_URL}/Login/GetLogin`, {
+			// Call API for login
+			const res = await fetch(`${config.API_URL}/Login/Login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -37,21 +36,40 @@ export default function useLogin() {
 
 			const data = await res.json();
 
-			// Check for API response success
-			if (data.isSuccess) {
-				const employeeDetails = data.getEmployeeDetailsbyEmpId;
+			// Ensure API response is valid
+			if (data.isSuccess && data.loginList) {
+				const employeeDetails = data.loginList;
 
-				// Save session in the authentication context or local storage
+				// Validate required properties before saving session
+				if (!employeeDetails.roleName || !data.token) {
+					throw new Error('Invalid login response: Missing required fields');
+				}
+
+				// Save session in authentication context
 				saveSession({
-					empID: employeeDetails.empID,
-					employeeName: employeeDetails.employeeName,
-					roles: employeeDetails.role,
-					mobileNumber: employeeDetails.mobileNumber,
-					dateOfBirth: employeeDetails.dateOfBirth,
-					dateOfJoining: employeeDetails.dateOfJoining,
+					employeeName: employeeDetails.employeeName || '',
+					emailID: employeeDetails.emailID || '',
+					userName: employeeDetails.userName || '',
+					roles: employeeDetails.roleName || '',
+					mobileNumber: employeeDetails.mobileNumber || '',
+					officeLandLine: employeeDetails.officeLandLine || '',
+					extensionNumber: employeeDetails.extensionNumber || '',
+					departmentID: employeeDetails.departmentID || 0,
+					departmentName: employeeDetails.departmentName || '',
+					roleID: employeeDetails.roleID || 0,
+					roleName: employeeDetails.roleName || '',
+					status: employeeDetails.status || 0,
+					createdBy: employeeDetails.createdBy || '',
+					createdDate: employeeDetails.createdDate || '',
+					updatedBy: employeeDetails.updatedBy || '',
+					updatedDate: employeeDetails.updatedDate || '',
+					token: data.token,
 				});
 
-				// Redirect user to the intended route or fallback to "/"
+				// Store token securely (localStorage or sessionStorage)
+				localStorage.setItem('authToken', data.token);
+
+				// Redirect user after successful login
 				navigate(redirectUrl);
 			} else {
 				throw new Error(data.message || 'Login failed');

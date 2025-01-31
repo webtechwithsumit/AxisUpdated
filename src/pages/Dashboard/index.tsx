@@ -1,54 +1,18 @@
-import { Col, Row } from 'react-bootstrap'
-import Statistics from './Statistics'
-import WeeklySelesChart from './WeeklySelesChart'
-import YearlySelesChart from './YearlySelesChart'
-import ChatList from './ChatList'
-import Projects from './Projects'
-
-// componets
-import { PageBreadcrumb } from '@/components'
-
-// data
-import { chatMessages, statistics } from './data'
+import { Image } from 'react-bootstrap'
+import logo from '../../assets/images/Axis-securities.png'
 
 const Dashboard = () => {
+	<title>Axis Securities</title>
+
+
 	return (
 		<>
-			<PageBreadcrumb title="Welcome!" subName="Dashboards" />
-			<Row>
-				{(statistics || []).map((item, idx) => {
-					return (
-						<Col xxl={3} sm={6} key={idx}>
-							<Statistics
-								title={item.title}
-								stats={item.stats}
-								change={item.change}
-								icon={item.icon}
-								variant={item.variant}
-							/>
-						</Col>
-					)
-				})}
-			</Row>
 
-			<Row>
-				<Col lg={8}>
-					<WeeklySelesChart />
-				</Col>
-				<Col lg={4}>
-					<YearlySelesChart />
-				</Col>
-			</Row>
 
-			<Row>
-				<Col xl={4}>
-					<ChatList messages={chatMessages} />
-				</Col>
+			<div className='w-50 m-auto mt-5 pt-5'>
+				<Image src={logo} alt="logo" className='w-100 ' />
+			</div>
 
-				<Col xl={8}>
-					<Projects />
-				</Col>
-			</Row>
 		</>
 	)
 }

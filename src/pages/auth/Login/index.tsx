@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -13,23 +13,23 @@ interface UserData {
 	password: string
 }
 
-const BottomLinks = () => {
-	return (
-		<Row>
-			<Col xs={12} className="text-center">
-				<p className="text-dark-emphasis">
-					Don't have an account?{' '}
-					<Link
-						to="/auth/register"
-						className="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"
-					>
-						<b>Sign up</b>
-					</Link>
-				</p>
-			</Col>
-		</Row>
-	)
-}
+// const BottomLinks = () => {
+// 	return (
+// 		<Row>
+// 			<Col xs={12} className="text-center">
+// 				<p className="text-dark-emphasis">
+// 					Don't have an account?{' '}
+// 					<Link
+// 						to="/auth/register"
+// 						className="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"
+// 					>
+// 						<b>Sign up</b>
+// 					</Link>
+// 				</p>
+// 			</Col>
+// 		</Row>
+// 	)
+// }
 
 const schemaResolver = yupResolver(
 	yup.object().shape({
@@ -46,9 +46,9 @@ const Login = () => {
 			{isAuthenticated && <Navigate to={redirectUrl} replace />}
 
 			<AuthLayout
-				authTitle="Sign In"
-				helpText="Enter your email address and password to access account."
-				bottomLinks={<BottomLinks />}
+				authTitle="Login"
+				// helpText="Enter your email address and password to access account."
+				// bottomLinks={<BottomLinks />}
 				hasThirdPartyLogin
 			>
 				<VerticalForm<UserData>

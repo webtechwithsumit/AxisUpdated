@@ -15,7 +15,7 @@ import {
 	useAuthContext,
 	useThemeContext,
 } from '../common/context'
-interface IRoutesProps {}
+interface IRoutesProps { }
 
 const AllRoutes = (props: IRoutesProps) => {
 	const { settings } = useThemeContext()

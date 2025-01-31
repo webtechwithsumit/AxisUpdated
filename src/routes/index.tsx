@@ -26,74 +26,63 @@ const StarterPages = React.lazy(() => import('../pages/other/Starter'))
 const ContactListPages = React.lazy(() => import('../pages/other/ContactList'))
 const TimelinePages = React.lazy(() => import('../pages/other/Timeline'))
 
-// // base ui
-const Accordions = React.lazy(() => import('../pages/ui/Accordions'))
-const Alerts = React.lazy(() => import('../pages/ui/Alerts'))
-const Avatars = React.lazy(() => import('../pages/ui/Avatars'))
-const Badges = React.lazy(() => import('../pages/ui/Badges'))
-const Breadcrumb = React.lazy(() => import('../pages/ui/Breadcrumb'))
-const Buttons = React.lazy(() => import('../pages/ui/Buttons'))
-const Cards = React.lazy(() => import('../pages/ui/Cards'))
-const Carousel = React.lazy(() => import('../pages/ui/Carousel'))
-const Collapse = React.lazy(() => import('../pages/ui/Collapse'))
-const Dropdowns = React.lazy(() => import('../pages/ui/Dropdowns'))
-const EmbedVideo = React.lazy(() => import('../pages/ui/EmbedVideo'))
-const Grid = React.lazy(() => import('../pages/ui/Grid'))
-const Links = React.lazy(() => import('../pages/ui/Links'))
-const ListGroup = React.lazy(() => import('../pages/ui/ListGroup'))
-const Modals = React.lazy(() => import('../pages/ui/Modals'))
-const Notifications = React.lazy(() => import('../pages/ui/Notifications'))
-const Offcanvas = React.lazy(() => import('../pages/ui/Offcanvas'))
-const Placeholders = React.lazy(() => import('../pages/ui/Placeholders'))
-const Pagination = React.lazy(() => import('../pages/ui/Pagination'))
-const Popovers = React.lazy(() => import('../pages/ui/Popovers'))
-const Progress = React.lazy(() => import('../pages/ui/Progress'))
-const Spinners = React.lazy(() => import('../pages/ui/Spinners'))
-const Tabs = React.lazy(() => import('../pages/ui/Tabs'))
-const Tooltips = React.lazy(() => import('../pages/ui/Tooltips'))
-const Typography = React.lazy(() => import('../pages/ui/Typography'))
-const Utilities = React.lazy(() => import('../pages/ui/Utilities'))
+// // Custom Pages Components
+const EmployeeMaster = React.lazy(() => import('../pages/other/HomePages/EmployeeMaster/EmployeeMaster.tsx'))
+const EmployeeMasterinsert = React.lazy(() => import('../pages/other/HomePages/EmployeeMaster/EmployeeMasterinsert.tsx'))
 
-// // extended ui
-const Portlets = React.lazy(() => import('../pages/extended/Portlets'))
-const RangeSlider = React.lazy(() => import('../pages/extended/RangeSlider'))
-const Scrollbar = React.lazy(() => import('../pages/extended/ScrollBar'))
+const ManagerMaster = React.lazy(() => import('../pages/other/HomePages/ManagerMaster/ManagerMaster.tsx'))
+const ManagerMasterinsert = React.lazy(() => import('../pages/other/HomePages/ManagerMaster/ManagerMasterinsert.tsx'))
 
-// // icons
-const RemixIcons = React.lazy(() => import('../pages/ui/icons/RemixIcons'))
-const BootstrapIcons = React.lazy(
-	() => import('../pages/ui/icons/BootstrapIcons')
-)
-const MaterialIcons = React.lazy(
-	() => import('../pages/ui/icons/MaterialIcons')
-)
 
-// charts
-const ApexCharts = React.lazy(() => import('../pages/charts/ApexCharts'))
-const SparklineCharts = React.lazy(
-	() => import('../pages/charts/SparklinesCharts')
-)
-const ChartJs = React.lazy(() => import('../pages/charts/ChartJsCharts'))
 
-// // forms
-const BasicElements = React.lazy(
-	() => import('../pages/ui/forms/BasicElements')
-)
-const FormAdvanced = React.lazy(() => import('../pages/ui/forms/FormAdvanced'))
-const Validation = React.lazy(() => import('../pages/ui/forms/Validation'))
-const Wizard = React.lazy(() => import('../pages/ui/forms/Wizard'))
-const FileUploads = React.lazy(() => import('../pages/ui/forms/FileUploads'))
-const Editors = React.lazy(() => import('../pages/ui/forms/Editors'))
-const ImageCrop = React.lazy(() => import('../pages/ui/forms/ImageCrop'))
-const Editable = React.lazy(() => import('../pages/ui/forms/Editable'))
 
-// // tables
-const BasicTables = React.lazy(() => import('../pages/ui/tables/BasicTables'))
-const DataTables = React.lazy(() => import('../pages/ui/tables/DataTables'))
+const DepartmentMaster = React.lazy(() => import('../pages/other/HomePages/DepartmentMaster/DepartmentMaster.tsx'))
+const DepartmentMasterinsert = React.lazy(() => import('../pages/other/HomePages/DepartmentMaster/DepartmentMasterinsert.tsx'))
 
-// // maps
-const GoogleMaps = React.lazy(() => import('../pages/ui/maps/GoogleMaps'))
-const VectorMaps = React.lazy(() => import('../pages/ui/maps/VectorMaps'))
+// const WorkFlow = React.lazy(() => import('../pages/other/HomePages/WorkFlow/WorkFlow.tsx'))
+// const WorkFlowinsert = React.lazy(() => import('../pages/other/HomePages/WorkFlow/WorkFlowinsert.tsx'))
+
+// const TaskMaster = React.lazy(() => import('../pages/other/HomePages/TaskMaster/TaskMaster/TaskMaster.tsx'))
+// const TaskMasterinsert = React.lazy(() => import('../pages/other/HomePages/TaskMaster/TaskMaster/TaskMasterinsert.tsx'))
+
+// const SubTaskMaster = React.lazy(() => import('../pages/other/HomePages/TaskMaster/SubTaskMaster/SubTaskMaster.tsx'))
+// const SubTaskMasterinsert = React.lazy(() => import('../pages/other/HomePages/TaskMaster/SubTaskMaster/SubTaskMasterinsert.tsx'))
+
+const ProductTypeMaster = React.lazy(() => import('../pages/other/HomePages/ProductType/ProductTypeMaster.tsx'))
+const ProductTypeMasterinsert = React.lazy(() => import('../pages/other/HomePages/ProductType/ProductTypeinsertMaster.tsx'))
+
+const CheckListMaster = React.lazy(() => import('../pages/other/HomePages/CheckListMaster/CheckListMaster.tsx'))
+const CheckListMasterinsert = React.lazy(() => import('../pages/other/HomePages/CheckListMaster/CheckListMasterinsert.tsx'))
+
+
+const DiscussionList = React.lazy(() => import('../pages/other/HomePages/DiscussionForum/DiscussionList.tsx'))
+const DiscussionForum = React.lazy(() => import('../pages/other/HomePages/DiscussionForum/DiscussionForum.tsx'))
+
+const RoleMaster = React.lazy(() => import('../pages/other/HomePages/RoleMaster/Rolemaster.tsx'))
+const RoleMasterinsert = React.lazy(() => import('../pages/other/HomePages/RoleMaster/RoleMasterinsert.tsx'))
+
+const ApprovalTask = React.lazy(() => import('../pages/other/HomePages/ApprovalTask/ApprovalTask.tsx'))
+const AssigneeDepartment = React.lazy(() => import('../pages/other/HomePages/AssigneeDepartment/assigneeDepartment.tsx'))
+
+
+const ProductMasterinsert = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ProductMasterinsert.tsx'))
+const OwnDepartmentProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/OwnProduct.tsx'))
+const OtherDepartmentProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/OtherProduct.tsx'))
+const RejectedProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/RejectProduct.tsx'))
+const SignedOffProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/SignOffProduct.tsx'))
+
+const InstantMail = React.lazy(() => import('../pages/other/HomePages/InstantMail/InstantMail.tsx'))
+const ComposeMail = React.lazy(() => import('../pages/other/HomePages/InstantMail/ComposeMail.tsx'))
+
+
+const Addholiday = React.lazy(() => import('../pages/other/HomePages/AddHoliday/Addholiday.tsx'))
+const AddholidayInsert = React.lazy(() => import('../pages/other/HomePages/AddHoliday/AddholidayInsert.tsx'))
+
+
+
+
+
+
 
 // // error
 const Error404 = React.lazy(() => import('../pages/error/Error404'))
@@ -151,6 +140,222 @@ const customPagesRoutes = {
 			route: PrivateRoute,
 
 		},
+
+
+		{
+			path: '/pages/EmployeeMaster',
+			name: 'EmployeeMaster',
+			element: <EmployeeMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/EmployeeMasterinsert',
+			name: 'EmployeeMasterinsert',
+			element: <EmployeeMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/EmployeeMasterinsert/:id',
+			name: 'EmployeeMasterinsert',
+			element: <EmployeeMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ManagerMaster',
+			name: 'ManagerMaster',
+			element: <ManagerMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ManagerMasterinsert',
+			name: 'ManagerMasterinsert',
+			element: <ManagerMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ManagerMasterinsert/:id',
+			name: 'ManagerMasterinsert',
+			element: <ManagerMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/DepartmentMaster',
+			name: 'DepartmentMaster',
+			element: <DepartmentMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/DepartmentMasterinsert',
+			name: 'DepartmentMasterinsert',
+			element: <DepartmentMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/DepartmentMasterinsert/:id',
+			name: 'DepartmentMasterinsert',
+			element: <DepartmentMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductTypeMaster',
+			name: 'ProductTypeMaster',
+			element: <ProductTypeMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductTypeMasterinsert',
+			name: 'ProductTypeMasterinsert',
+			element: <ProductTypeMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductTypeMasterinsert/:id',
+			name: 'ProductTypeMasterinsert',
+			element: <ProductTypeMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/CheckListMaster',
+			name: 'CheckListMaster',
+			element: <CheckListMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/CheckListMasterinsert',
+			name: 'CheckListMasterinsert',
+			element: <CheckListMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CheckListMasterinsert/:id',
+			name: 'CheckListMasterinsert',
+			element: <CheckListMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/DiscussionList',
+			name: 'DiscussionList',
+			element: <DiscussionList />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/DiscussionForum',
+			name: 'DiscussionForum',
+			element: <DiscussionForum />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/RoleMaster',
+			name: 'RoleMaster',
+			element: <RoleMaster />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/RoleMasterinsert',
+			name: 'RoleMasterinsert',
+			element: <RoleMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/RoleMasterinsert/:id',
+			name: 'RoleMasterinsert',
+			element: <RoleMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ApprovalTask',
+			name: 'ApprovalTask',
+			element: <ApprovalTask />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/AssigneeDepartment',
+			name: 'AssigneeDepartment',
+			element: <AssigneeDepartment />,
+			route: PrivateRoute,
+		},
+
+
+
+
+		{
+			path: '/pages/ProductMaster',
+			name: 'ProductMasterinsert',
+			element: <ProductMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster/ProductMasterinsert/:id',
+			name: 'ProductMasterinsert',
+			element: <ProductMasterinsert />,
+			route: PrivateRoute,
+		},
+
+
+		{
+			path: '/pages/ProductMaster/OwnDepartmentProduct',
+			name: 'OwnDepartmentProduct',
+			element: <OwnDepartmentProduct />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster/OtherDepartmentProduct',
+			name: 'OtherDepartmentProduct',
+			element: <OtherDepartmentProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/RejectedProduct',
+			name: 'RejectedProduct',
+			element: <RejectedProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/SignedOffProduct',
+			name: 'SignedOffProduct',
+			element: <SignedOffProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/InstantMail',
+			name: 'InstantMail',
+			element: <InstantMail />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ComposeMail',
+			name: 'ComposeMail',
+			element: <ComposeMail />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/Addholiday',
+			name: 'Addholiday',
+			element: <Addholiday />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/AddholidayInsert',
+			name: 'AddholidayInsert',
+			element: <AddholidayInsert />,
+			route: PrivateRoute,
+		},
+
 		{
 			path: '/pages/invoice',
 			name: 'Invoice',
@@ -196,339 +401,6 @@ const customPagesRoutes = {
 	],
 }
 
-// ui
-const uiRoutes: RoutesProps = {
-	path: '/ui',
-	name: 'Components',
-	icon: 'pocket',
-	header: 'UI Elements',
-	children: [
-		{
-			path: '/ui/base',
-			name: 'Base UI',
-			children: [
-				{
-					path: '/ui/accordions',
-					name: 'Accordions',
-					element: <Accordions />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/alerts',
-					name: 'Alerts',
-					element: <Alerts />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/avatars',
-					name: 'Avatars',
-					element: <Avatars />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/badges',
-					name: 'Badges',
-					element: <Badges />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/breadcrumb',
-					name: 'Breadcrumb',
-					element: <Breadcrumb />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/buttons',
-					name: 'Buttons',
-					element: <Buttons />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/cards',
-					name: 'Cards',
-					element: <Cards />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/carousel',
-					name: 'Carousel',
-					element: <Carousel />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/collapse',
-					name: 'Collapse',
-					element: <Collapse />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/dropdowns',
-					name: 'Dropdowns',
-					element: <Dropdowns />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/embed-video',
-					name: 'Embed Video',
-					element: <EmbedVideo />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/grid',
-					name: 'Grid',
-					element: <Grid />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/links',
-					name: 'Links',
-					element: <Links />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/list-group',
-					name: 'List Group',
-					element: <ListGroup />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/modals',
-					name: 'Modals',
-					element: <Modals />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/notifications',
-					name: 'Notifications',
-					element: <Notifications />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/offcanvas',
-					name: 'Offcanvas',
-					element: <Offcanvas />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/placeholders',
-					name: 'Placeholders',
-					element: <Placeholders />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/pagination',
-					name: 'Pagination',
-					element: <Pagination />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/popovers',
-					name: 'Popovers',
-					element: <Popovers />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/progress',
-					name: 'Progress',
-					element: <Progress />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/spinners',
-					name: 'Spinners',
-					element: <Spinners />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/tabs',
-					name: 'Tabs',
-					element: <Tabs />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/tooltips',
-					name: 'Tooltips',
-					element: <Tooltips />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/typography',
-					name: 'Typography',
-					element: <Typography />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/utilities',
-					name: 'Utilities',
-					element: <Utilities />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/extended-ui',
-			name: 'Extended UI',
-			children: [
-				{
-					path: '/extended-ui/portlets',
-					name: 'Portlets',
-					element: <Portlets />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/extended-ui/range-slider',
-					name: 'Range Slider',
-					element: <RangeSlider />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/extended-ui/scrollbar',
-					name: 'Scrollbar',
-					element: <Scrollbar />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/ui/icons',
-			name: 'Icons',
-			children: [
-				{
-					path: '/ui/icons/remix-icons',
-					name: 'Remix Icons',
-					element: <RemixIcons />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/icons/Bootstrap-icons',
-					name: 'Bootstrap Icons',
-					element: <BootstrapIcons />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/icons/Material-icons',
-					name: 'Material Icons',
-					element: <MaterialIcons />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/charts',
-			name: 'Charts',
-			children: [
-				{
-					path: 'charts/apex-charts',
-					name: 'Apex Charts',
-					element: <ApexCharts />,
-					route: PrivateRoute,
-				},
-				{
-					path: 'charts/chartjs',
-					name: 'ChartJS',
-					element: <ChartJs />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/charts/sparkline-charts',
-					name: 'Sparkline Charts',
-					element: <SparklineCharts />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/ui/forms',
-			name: 'Forms',
-			children: [
-				{
-					path: '/ui/forms/basic-elements',
-					name: 'Basic Elements',
-					element: <BasicElements />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/form-advanced',
-					name: 'Form Advanced',
-					element: <FormAdvanced />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/validation',
-					name: 'Validation',
-					element: <Validation />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/wizard',
-					name: 'Wizard',
-					element: <Wizard />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/file-uploads',
-					name: 'File Uploads',
-					element: <FileUploads />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/editors',
-					name: 'Editors',
-					element: <Editors />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/image-crop',
-					name: 'Image Crop',
-					element: <ImageCrop />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/forms/editable',
-					name: 'Editable',
-					element: <Editable />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/ui/tables',
-			name: 'Tables',
-			children: [
-				{
-					path: '/ui/tables/basic-tables',
-					name: 'Basic Tables',
-					element: <BasicTables />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/tables/data-tables',
-					name: 'Data Tables',
-					element: <DataTables />,
-					route: PrivateRoute,
-				},
-			],
-		},
-		{
-			path: '/ui/maps',
-			name: 'Maps',
-			children: [
-				{
-					path: '/ui/maps/google-maps',
-					name: 'Google Maps',
-					element: <GoogleMaps />,
-					route: PrivateRoute,
-				},
-				{
-					path: '/ui/maps/vector-maps',
-					name: 'Vector Maps',
-					element: <VectorMaps />,
-					route: PrivateRoute,
-				},
-			],
-		},
-	],
-}
 
 // auth
 const authRoutes: RoutesProps[] = [
@@ -607,7 +479,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 }
 
 // All routes
-const authProtectedRoutes = [dashboardRoutes, customPagesRoutes, uiRoutes]
+const authProtectedRoutes = [dashboardRoutes, customPagesRoutes]
 const publicRoutes = [...authRoutes, ...otherPublicRoutes]
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes])

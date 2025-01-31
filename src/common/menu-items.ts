@@ -20,7 +20,7 @@ const MENU_ITEMS: MenuItemType[] = [
 		label: 'Dashboards',
 		isTitle: false,
 		icon: 'uil-home-alt',
-		badge: { variant: 'success', text: '4' },
+		badge: { variant: 'success', text: '5' },
 		children: [
 			{
 				key: 'ds-analytics',

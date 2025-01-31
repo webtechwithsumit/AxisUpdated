@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 //images
-import logo from '@/assets/images/logo.png'
+import logo from '@/assets/images/Axis-securities.png'
 import logoDark from '@/assets/images/logo-dark.png'
 import logoSm from '@/assets/images/logo-sm.png'
 import { getMenuItems, useAuthContext } from '@/common'
@@ -26,10 +26,10 @@ const SideBarContent = () => {
 const LeftSidebar = () => {
 	return (
 		<>
-			<div className="leftside-menu ">
+			<div className="leftside-menu menuitem-active bg-white">
 				<Link to="/" className="logo logo-light">
 					<span className="logo-lg">
-						<img src={logo} alt="logo" />
+						<img src={logo} style={{ width: '86%', height: 'auto', padding: '10px' }} alt="logo" />
 					</span>
 					<span className="logo-sm">
 						<img src={logoSm} alt="small logo" />

@@ -2,18 +2,25 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import axios, { AxiosError } from 'axios';
 import config from '@/config';
 
-// Define the User type based on your new API response
+// Define the User type based on API response
 type User = {
-	empID: string;
-	email?: string; // Optional, as it's not in the new API response but may exist
-	username?: string; // Optional, for consistency
-	roles: string;
+	emailID?: string;
+	userName?: string;
 	employeeName: string;
+	roles: string;
+	roleID: number;
+	roleName: string; // Ensure roleName is included
 	mobileNumber: string;
-	dateOfBirth: string;
-	dateOfJoining: string;
-	token?: string; // Not included in your API, but kept for future compatibility
-	error?: string; // Optional property for error messages
+	officeLandLine?: string;
+	extensionNumber?: string;
+	departmentID?: number;
+	departmentName?: string;
+	status: number;
+	createdBy?: string;
+	createdDate?: string;
+	updatedBy?: string;
+	updatedDate?: string;
+	token?: string;
 };
 
 // Define the shape of the AuthContext
@@ -26,7 +33,7 @@ interface AuthContextType {
 	removeSession: () => void;
 }
 
-// Create the context with a default value
+// Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Custom hook for using AuthContext
@@ -38,52 +45,71 @@ export function useAuthContext() {
 	return context;
 }
 
+// Storage keys
 const authSessionKey = '_AUTH_SESSION';
+const authTokenKey = '_AUTH_TOKEN';
 
 // AuthProvider component
 export function AuthProvider({ children }: { children: ReactNode }) {
+	// Load session from localStorage
 	const [user, setUser] = useState<User | undefined>(
 		localStorage.getItem(authSessionKey)
 			? JSON.parse(localStorage.getItem(authSessionKey) || '{}')
 			: undefined
 	);
 
+	// Save session in localStorage and state
 	const saveSession = useCallback((user: User) => {
 		localStorage.setItem(authSessionKey, JSON.stringify(user));
+		localStorage.setItem(authTokenKey, user.token || '');
 		setUser(user);
 	}, []);
 
+	// Remove session from localStorage
 	const removeSession = useCallback(() => {
 		localStorage.removeItem(authSessionKey);
+		localStorage.removeItem(authTokenKey);
 		setUser(undefined);
 	}, []);
 
+	// Login function with API call
 	const login = async (email: string, password: string): Promise<{ status: number; message?: string }> => {
 		try {
-			// Call your login API
-			const response = await axios.post(`${config.API_URL}/Login/Getlogin`, {
+			const response = await axios.post(`${config.API_URL}/Login/Login`, {
 				email,
 				password,
 			});
 			const data = response.data;
-			if (data.isSuccess) {
-				const employeeDetails = data.getEmployeeDetailsbyEmpId;
 
+			if (data.isSuccess && data.loginList) {
+				const employeeDetails = data.loginList; // Ensure data.loginList exists
+
+				// Ensure roleName is included in userData
 				const userData: User = {
-					empID: employeeDetails.empID,
-					roles: employeeDetails.role,
+					emailID: employeeDetails.emailID,
+					userName: employeeDetails.userName,
 					employeeName: employeeDetails.employeeName,
+					roles: employeeDetails.roleName, // Mapping roles from API
+					roleID: employeeDetails.roleID,
+					roleName: employeeDetails.roleName, // Ensure roleName is explicitly included
 					mobileNumber: employeeDetails.mobileNumber,
-					dateOfBirth: employeeDetails.dateOfBirth,
-					dateOfJoining: employeeDetails.dateOfJoining,
+					officeLandLine: employeeDetails.officeLandLine,
+					extensionNumber: employeeDetails.extensionNumber,
+					departmentID: employeeDetails.departmentID,
+					departmentName: employeeDetails.departmentName,
+					status: employeeDetails.status,
+					createdBy: employeeDetails.createdBy,
+					createdDate: employeeDetails.createdDate,
+					updatedBy: employeeDetails.updatedBy,
+					updatedDate: employeeDetails.updatedDate,
+					token: data.token, // Save token
 				};
 
-				console.log('userdata', userData);
-				saveSession(userData); // Save user session
+				saveSession(userData);
 				return { status: 200, message: data.message };
 			}
 
-			return { status: 400, message: data.message || 'Login failed. Invalid response from server.' };
+			return { status: 400, message: data.message || 'Login failed. Invalid response.' };
 		} catch (error: unknown) {
 			const axiosError = error as AxiosError;
 			console.error('Login failed:', axiosError);
@@ -95,6 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
+	// Logout function
 	const logout = useCallback(() => {
 		removeSession();
 	}, [removeSession]);
