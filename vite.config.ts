@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '', // Adjust this to match your GitHub repo name with leading and trailing slashes
+  base: 'https://github.com/webtechwithsumit/RBAC-Modal', // Adjust this to match your GitHub repo name with leading and trailing slashes
   plugins: [react()],
   server: {
     port: 3000,
