@@ -2,17 +2,23 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '', // Adjust this to match your GitHub repo name with leading and trailing slashes
+  base: '/', // Ensure this is correct for your hosting environment
   plugins: [react()],
   server: {
     port: 3000,
+    host: true, // Allows access from network
+  },
+  build: {
+    outDir: 'dist', // Ensure correct build directory
   },
   define: { 'process.env': {} },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`, // Ensures React is injected in every file
   },
 });
