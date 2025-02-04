@@ -61,7 +61,7 @@ const Register = () => {
 	const fetchEmployeeDetails = async (empID: string) => {
 		try {
 			const response = await axios.get(
-				`${config.API_URL_APPLICATION}/Login/GetEmployeeDetailsbyEmpId?Flag=1&EmpID=${empID}`
+				`${config.API_URL}/Login/GetEmployeeDetailsbyEmpId?Flag=1&EmpID=${empID}`
 			);
 			if (response.data.isSuccess) {
 				const details = response.data.fetchDetails[0];
@@ -99,7 +99,7 @@ const Register = () => {
 	const verifyDOJ = async (empID: string, joiningDate: string) => {
 		try {
 			const response = await axios.post(
-				`${config.API_URL_APPLICATION}/Login/VerifyJoiningDate`,
+				`${config.API_URL}/Login/VerifyJoiningDate`,
 				null,
 				{ params: { EmpID: empID, Input: joiningDate } }
 			);
@@ -123,7 +123,7 @@ const Register = () => {
 
 	const verifyDOB = async (empID: string, dob: string) => {
 		try {
-			const response = await axios.post(`${config.API_URL_APPLICATION}/Login/VerifyDOB`, null, {
+			const response = await axios.post(`${config.API_URL}/Login/VerifyDOB`, null, {
 				params: { EmpID: empID, Input: dob, }
 			});
 			if (response.data.isSuccess) {
@@ -240,7 +240,7 @@ const Register = () => {
 			};
 
 			const response = await axios.post(
-				`${config.API_URL_APPLICATION}/Login/InsertLoginData`,
+				`${config.API_URL}/Login/InsertLoginData`,
 				postData,
 				{
 					headers: {

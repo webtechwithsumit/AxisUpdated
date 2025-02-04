@@ -18,91 +18,65 @@ const Dashboard = React.lazy(() => import('../pages/Dashboard'))
 
 // // pages
 const ProfilePages = React.lazy(() => import('../pages/other/Profile/'))
-const AdhocTempleteList = React.lazy(() => import('../pages/other/AdminSide/AdhocTempleteList.tsx'))
+const InvoicePages = React.lazy(() => import('../pages/other/Invoice'))
 const FAQPages = React.lazy(() => import('../pages/other/FAQ'))
 const PricingPages = React.lazy(() => import('../pages/other/Pricing'))
 const MaintenancePages = React.lazy(() => import('../pages/other/Maintenance'))
-const TemplateMaster = React.lazy(() => import('../pages/other/Modules-Master.tsx'))
-const ActiveTasks = React.lazy(() => import('../pages/other/ActiveTasks.tsx'))
-const ActiveProject = React.lazy(() => import('../pages/other/ActiveProject.tsx'))
-const ApprovalConsole = React.lazy(() => import('../pages/other/ApprovalConsole.tsx'))
-const NotificationPage = React.lazy(() => import('../pages/other/Component/NotificationPage.tsx'))
-const Notification = React.lazy(() => import('../pages/other/DoerSide/Notification.tsx'))
-const FormMaster = React.lazy(() => import('../pages/other/FormMaster.tsx'))
-const LnMaster = React.lazy(() => import('../pages/other/AdminSide/LnMaster/LnMaster.tsx'))
-const ChkLnMaster = React.lazy(() => import('../pages/other/ChkLnMaster.tsx'))
-const TicketMaster = React.lazy(() => import('../pages/other/TicketMaster.tsx'))
-const SystemLogs = React.lazy(() => import('../pages/other/SystemLogs.tsx'))
-const ChkTaskMaster = React.lazy(() => import('../pages/other/ChkTaskMaster.tsx'))
-const ChecklistMaster = React.lazy(() => import('../pages/other/ChecklistCollection.tsx'))
-const CompletedTask = React.lazy(() => import('../pages/other/DoerSide/CompletedTask.tsx'))
-const TaskPlanned = React.lazy(() => import('../pages/other/TaskPlanned.tsx'))
-const ExpireTask = React.lazy(() => import('../pages/other/DoerSide/ExpireTask.tsx'))
-const PendingTask = React.lazy(() => import('../pages/other/DoerSide/PendingTask.tsx'))
-const RunningTask = React.lazy(() => import('../pages/other/RunningTask.tsx'))
-const ModuleMasterNew = React.lazy(() => import('../pages/other/AdminSide/ModuleMaster/ModuleMaster.tsx'))
-const ModuleMasterinsert = React.lazy(() => import('../pages/other/AdminSide/ModuleMaster/ModuleMasterInsert.tsx'))
-const ProcessMasterNew = React.lazy(() => import('../pages/other/AdminSide/ProcessMaster/ProcessMaster.tsx'))
-const ProcessMasterinsert = React.lazy(() => import('../pages/other/AdminSide/ProcessMaster/ProcessMasterInsert.tsx'))
-const DoerMasterNew = React.lazy(() => import('../pages/other/AdminSide/DoerMaster/DoerMaster.tsx'))
-const DoerMasterinsert = React.lazy(() => import('../pages/other/AdminSide/DoerMaster/DoerMasterinsert.tsx'))
-const ProjectMasterNew = React.lazy(() => import('../pages/other/AdminSide/ProjectMaster/ProjectMaster.tsx'))
-const ProjectMasterinsert = React.lazy(() => import('../pages/other/AdminSide/ProjectMaster/ProjectMasterinsert.tsx'))
-const ProjectSubmasterinsert = React.lazy(() => import('../pages/other/AdminSide/ProjectMaster/ProjectSubmasterinsert.tsx'))
-const EmployeeMasterNew = React.lazy(() => import('../pages/other/AdminSide/EmployeeMaster/EmployeeMaster.tsx'))
-const EmployeeMasterinsert = React.lazy(() => import('../pages/other/AdminSide/EmployeeMaster/EmployeeMasterinsert.tsx'))
-const RoleMasterNew = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/RoleMaster/RoleMaster.tsx'))
-const RoleMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/RoleMaster/RoleMasterinsert.tsx'))
-const IdentifierMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/Identifier/IdentifierMaster.tsx'))
-const IdentifierMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/Identifier/Identifiermasterinsert.tsx'))
-const MessMaster = React.lazy(() => import('../pages/other/AdminSide/MessMaster/MessMaster.tsx'))
-const MessMasterinsert = React.lazy(() => import('../pages/other/AdminSide/MessMaster/MessMasterinsert.tsx'))
-const Requirementmaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/RequirementMaster/Requirementmaster.tsx'))
-const Requirementmasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/RequirementMaster/RequirementMasterinsert.tsx'))
-const DesignationMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/DesignationMaster/DesignationMaster.tsx'))
-const DesignationMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/DesignationMaster/DesignationMasterinsert.tsx'))
-const DepartmentMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/DepartmentMaster/DepartmentMaster.tsx'))
-const DepartmentMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/DepartmentMaster/DepartmentMasterinsert.tsx'))
-const TenderMaster = React.lazy(() => import('../pages/other/AdminSide/TenderMaster/TenderMaster.tsx'))
-const TenderMasterinsert = React.lazy(() => import('../pages/other/AdminSide/TenderMaster/TenderMasterinsert.tsx'))
-const HrInputMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrInputMaster/HrInputmaster.tsx'))
-const HrInputMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrInputMaster/HrInputMasterinsert.tsx'))
-const HrTaskMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrTaskMaster/HrTaskMaster.tsx'))
-const HrTaskMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrTaskMaster/HrTaskMasterinsert.tsx'))
-const HrDoerMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrDoerMaster/HrDoerMaster.tsx'))
-const HrDoerMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrDoerMaster/HrDoerMasterinsert.tsx'))
-const HrResumeMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrResumeMaster/HrResumeMaster.tsx'))
-const HrResumeMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrResumeMaster/HrResumeMasterinsert.tsx'))
-const HrCandidateMaster = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrCandidateMaster/HrCandidateMaster.tsx'))
-const HrCandidateMasterinsert = React.lazy(() => import('../pages/other/AdminSide/HrMaster/HrCandidateMaster/HrCandidateMasterinsert.tsx'))
-const AddressMaster = React.lazy(() => import('../pages/other/AdminSide/AddressMaster/AddressMaster.tsx'))
-const AddressMasterinsert = React.lazy(() => import('../pages/other/AdminSide/AddressMaster/AddressMasterinsert.tsx'))
-const BankMaster = React.lazy(() => import('../pages/other/AdminSide/BankMaster/BankMaster.tsx'))
-const BankMasterinsert = React.lazy(() => import('../pages/other/AdminSide/BankMaster/BankMasterinsert.tsx'))
-const FillingFrequencyMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/FillingFrequencyMaster/FillingFrequencyMaster.tsx'))
-const FillingFrequencyMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/FillingFrequencyMaster/FillingFrequencyMasterinsert.tsx'))
-const ManagementContractMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/ManagementContractMaster/ManagementContractMaster.tsx'))
-const ManagementContractMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/ManagementContractMaster/ManagementContractMasterinsert.tsx'))
-const TrackTask = React.lazy(() => import('../pages/other/AdminSide/TrackTask/TrackTask.tsx'))
-
-const ProjectTypeMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/ProjectTypeMaster/ProjectTypeMaster.tsx'))
-const ProjectTypeMasterinsert = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/ProjectTypeMaster/ProjectTypeMasterinsert.tsx'))
-
-const VenderMaster = React.lazy(() => import('../pages/other/AdminSide/VenderMaster/VenderMaster.tsx'))
-const VenderMasterinsert = React.lazy(() => import('../pages/other/AdminSide/VenderMaster/VenderMasterinsert.tsx'))
-const MyPendingTask = React.lazy(() => import('../pages/other/DoerSide/PendingDoerTask.tsx'))
-const ProcessManualInitiation = React.lazy(() => import('../pages/other/AdminSide/ProcessMaster/ProcessManualInitiation.tsx'))
-const ProcessInitiation = React.lazy(() => import('../pages/other/AdminSide/ProcessMaster/ProcessInitiation.tsx'))
-const TaskMasterNew = React.lazy(() => import('../pages/other/AdminSide/TaskMaster/TaskMaster.tsx'))
-const CommonMaster = React.lazy(() => import('../pages/other/AdminSide/CommonMaster/CommonMasterPage.tsx'))
-const CommonModule = React.lazy(() => import('../pages/other/CommonModule-process/Module.tsx'))
-const CommonProcess = React.lazy(() => import('../pages/other/CommonModule-process/Process.tsx'))
-const CreateNotification = React.lazy(() => import('../pages/other/Component/ViewTask/CreateNotification/CreateNotification.tsx'))
-
-
-
+const StarterPages = React.lazy(() => import('../pages/other/Starter'))
 const ContactListPages = React.lazy(() => import('../pages/other/ContactList'))
 const TimelinePages = React.lazy(() => import('../pages/other/Timeline'))
+
+// // Custom Pages Components
+const EmployeeMaster = React.lazy(() => import('../pages/other/HomePages/EmployeeMaster/EmployeeMaster.tsx'))
+const EmployeeMasterinsert = React.lazy(() => import('../pages/other/HomePages/EmployeeMaster/EmployeeMasterinsert.tsx'))
+
+const ManagerMaster = React.lazy(() => import('../pages/other/HomePages/ManagerMaster/ManagerMaster.tsx'))
+const ManagerMasterinsert = React.lazy(() => import('../pages/other/HomePages/ManagerMaster/ManagerMasterinsert.tsx'))
+
+
+
+
+const DepartmentMaster = React.lazy(() => import('../pages/other/HomePages/DepartmentMaster/DepartmentMaster.tsx'))
+const DepartmentMasterinsert = React.lazy(() => import('../pages/other/HomePages/DepartmentMaster/DepartmentMasterinsert.tsx'))
+
+const ProductTypeMaster = React.lazy(() => import('../pages/other/HomePages/ProductType/ProductTypeMaster.tsx'))
+const ProductTypeMasterinsert = React.lazy(() => import('../pages/other/HomePages/ProductType/ProductTypeinsertMaster.tsx'))
+
+const CheckListMaster = React.lazy(() => import('../pages/other/HomePages/CheckListMaster/CheckListMaster.tsx'))
+const CheckListMasterinsert = React.lazy(() => import('../pages/other/HomePages/CheckListMaster/CheckListMasterinsert.tsx'))
+
+
+const DiscussionList = React.lazy(() => import('../pages/other/HomePages/DiscussionForum/DiscussionList.tsx'))
+const DiscussionForum = React.lazy(() => import('../pages/other/HomePages/DiscussionForum/DiscussionForum.tsx'))
+
+const RoleMaster = React.lazy(() => import('../pages/other/HomePages/RoleMaster/Rolemaster.tsx'))
+const RoleMasterinsert = React.lazy(() => import('../pages/other/HomePages/RoleMaster/RoleMasterinsert.tsx'))
+
+const ApprovalTask = React.lazy(() => import('../pages/other/HomePages/ApprovalTask/ApprovalTask.tsx'))
+const AssigneeDepartment = React.lazy(() => import('../pages/other/HomePages/AssigneeDepartment/assigneeDepartment.tsx'))
+
+
+const ProductMasterinsert = React.lazy(() => import('../pages/other/HomePages/ProductMaster/DepartmentLevel2/ProductMasterinsert.tsx'))
+const OwnDepartmentProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/DepartmentLevel2/OwnProduct.tsx'))
+const OtherDepartmentProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/DepartmentLevel2/OtherProduct.tsx'))
+const RejectedProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/DepartmentLevel2/RejectProduct.tsx'))
+const SignedOffProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/DepartmentLevel2/SignOffProduct.tsx'))
+
+const InstantMail = React.lazy(() => import('../pages/other/HomePages/InstantMail/InstantMail.tsx'))
+const ComposeMail = React.lazy(() => import('../pages/other/HomePages/InstantMail/ComposeMail.tsx'))
+
+
+const Addholiday = React.lazy(() => import('../pages/other/HomePages/AddHoliday/Addholiday.tsx'))
+const AddholidayInsert = React.lazy(() => import('../pages/other/HomePages/AddHoliday/AddholidayInsert.tsx'))
+
+
+
+const SignedOffProducts = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/SignOffProducts.tsx'))
+const PendingCirculation = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/NewProductPendingCirculation.tsx'))
+const PendingSignOff = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/ProductPendingSignOff.tsx'))
+const PendingFinalSignOff = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/ProductPendingFinalSignOff.tsx'))
+const LaunchedProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/LaunchedProduct.tsx'))
+
 
 
 // // error
@@ -134,12 +108,15 @@ const dashboardRoutes: RoutesProps = {
 			name: 'Root',
 			element: <Dashboard />,
 			route: PrivateRoute,
+			roles: ['DME', 'User']
+
 		},
 		{
 			path: '/dashboard',
 			name: 'Dashboard',
 			element: <Dashboard />,
 			route: PrivateRoute,
+			roles: ['DME', 'User']
 		},
 	],
 }
@@ -154,13 +131,324 @@ const customPagesRoutes = {
 		{
 			path: '/pages/profile',
 			name: 'Profile',
-			element: <ProfilePages />,
+			element: <PrivateRoute element={<ProfilePages />} roles={['DME', 'User']} />,
+			route: PrivateRoute,
+		},
+
+
+		{
+			path: '/pages/EmployeeMaster',
+			name: 'EmployeeMaster',
+			element: <EmployeeMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/EmployeeMasterinsert',
+			name: 'EmployeeMasterinsert',
+			element: <EmployeeMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/EmployeeMasterinsert/:id',
+			name: 'EmployeeMasterinsert',
+			element: <EmployeeMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/ManagerMaster',
+			name: 'ManagerMaster',
+			element: <ManagerMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/ManagerMasterinsert',
+			name: 'ManagerMasterinsert',
+			element: <ManagerMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/ManagerMasterinsert/:id',
+			name: 'ManagerMasterinsert',
+			element: <ManagerMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/DepartmentMaster',
+			name: 'DepartmentMaster',
+			element: <DepartmentMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/DepartmentMasterinsert',
+			name: 'DepartmentMasterinsert',
+			element: <DepartmentMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/DepartmentMasterinsert/:id',
+			name: 'DepartmentMasterinsert',
+			element: <DepartmentMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/ProductTypeMaster',
+			name: 'ProductTypeMaster',
+			element: <ProductTypeMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/ProductTypeMasterinsert',
+			name: 'ProductTypeMasterinsert',
+			element: <ProductTypeMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/ProductTypeMasterinsert/:id',
+			name: 'ProductTypeMasterinsert',
+			element: <ProductTypeMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/CheckListMaster',
+			name: 'CheckListMaster',
+			element: <CheckListMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/CheckListMasterinsert',
+			name: 'CheckListMasterinsert',
+			element: <CheckListMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/CheckListMasterinsert/:id',
+			name: 'CheckListMasterinsert',
+			element: <CheckListMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/DiscussionList/:id',
+			name: 'DiscussionList',
+			element: <DiscussionList />,
+			route: PrivateRoute,
+
+		},
+
+		{
+			path: '/pages/DiscussionForum/:id',
+			name: 'DiscussionForum',
+			element: <DiscussionForum />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/AdhocTempleteList',
-			name: 'AdhocTempleteList',
-			element: <AdhocTempleteList />,
+			path: '/pages/RoleMaster',
+			name: 'RoleMaster',
+			element: <RoleMaster />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/RoleMasterinsert',
+			name: 'RoleMasterinsert',
+			element: <RoleMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+		{
+			path: '/pages/RoleMasterinsert/:id',
+			name: 'RoleMasterinsert',
+			element: <RoleMasterinsert />,
+			route: PrivateRoute,
+			roles: ['Convener level 2']
+		},
+
+		{
+			path: '/pages/ApprovalTask',
+			name: 'ApprovalTask',
+			element: <ApprovalTask />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/AssigneeDepartment',
+			name: 'AssigneeDepartment',
+			element: <AssigneeDepartment />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster',
+			name: 'ProductMasterinsert',
+			element: <ProductMasterinsert />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/:id',
+			name: 'ProductMasterinsert',
+			element: <ProductMasterinsert />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster/ProductMasterinsert/:id',
+			name: 'ProductMasterinsert',
+			element: <ProductMasterinsert />,
+			route: PrivateRoute,
+		},
+
+
+		{
+			path: '/pages/ProductMaster/OwnDepartmentProduct',
+			name: 'OwnDepartmentProduct',
+			element: <OwnDepartmentProduct />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster/OtherDepartmentProduct',
+			name: 'OtherDepartmentProduct',
+			element: <OtherDepartmentProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/RejectedProduct',
+			name: 'RejectedProduct',
+			element: <RejectedProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/SignedOffProduct',
+			name: 'SignedOffProduct',
+			element: <SignedOffProduct />,
+			route: PrivateRoute,
+		},
+
+
+
+		{
+			path: '/pages/ProductMaster/SignedOffProducts',
+			name: 'SignedOffProducts',
+			element: <SignedOffProducts />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/PendingCirculation',
+			name: 'PendingCirculation',
+			element: <PendingCirculation />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/PendingFinalSignOff',
+			name: 'PendingFinalSignOff',
+			element: <PendingFinalSignOff />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ProductMaster/PendingSignOff',
+			name: 'PendingSignOff',
+			element: <PendingSignOff />,
+			route: PrivateRoute,
+		},
+
+		{
+			path: '/pages/ProductMaster/LaunchedProduct',
+			name: 'LaunchedProduct',
+			element: <LaunchedProduct />,
+			route: PrivateRoute,
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			path: '/pages/InstantMail',
+			name: 'InstantMail',
+			element: <InstantMail />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/ComposeMail',
+			name: 'ComposeMail',
+			element: <ComposeMail />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/Addholiday',
+			name: 'Addholiday',
+			element: <Addholiday />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/AddholidayInsert',
+			name: 'AddholidayInsert',
+			element: <AddholidayInsert />,
+			route: PrivateRoute,
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			path: '/pages/invoice',
+			name: 'Invoice',
+			element: <InvoicePages />,
 			route: PrivateRoute,
 		},
 		{
@@ -176,653 +464,11 @@ const customPagesRoutes = {
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/Modules-Master',
-			name: 'Modules Master',
-			element: <TemplateMaster />,
+			path: '/pages/starter',
+			name: 'Starter Page',
+			element: <StarterPages />,
 			route: PrivateRoute,
 		},
-		{
-			path: '/pages/CreateTemplates',
-			name: 'Create Templates',
-			element: <TemplateMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/CreateTemplates',
-			name: 'Modules Master',
-			element: <TemplateMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ActiveTasks',
-			name: 'Active Tasks',
-			element: <ActiveTasks />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ActiveProject',
-			name: 'Active Project',
-			element: <ActiveProject />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DoerMaster',
-			name: 'ModuleMaster ',
-			element: <DoerMasterNew />,
-			route: PrivateRoute,
-			roles: ['Admin'],
-		},
-		{
-			path: '/pages/DoerMasterinsert/:id',
-			name: 'DoerMasterinsert ',
-			element: <DoerMasterinsert />,
-			route: PrivateRoute,
-			roles: ['Admin', 'ProjectCoordinator'],
-		},
-		{
-			path: '/pages/DoerMasterinsert',
-			name: 'DoerMasterinsert ',
-			element: <DoerMasterinsert />,
-			route: PrivateRoute,
-			roles: ['Admin', 'ProjectCoordinator'],
-
-		},
-		// {
-		// 	path: '/pages/FilterTasks',
-		// 	name: 'Filter Tasks',
-		// 	element: <Filtertask />,
-		// 	route: PrivateRoute,
-		// },
-
-		{
-			path: '/pages/Notification',
-			name: 'Notification',
-			element: <Notification />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/admin/Notification',
-			name: 'Notification',
-			element: <Notification />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/admin/CompletedTask',
-			name: 'CompletedTask',
-			element: <CompletedTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ApprovalConsole',
-			name: 'Approval Console',
-			element: <ApprovalConsole />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/MessMaster',
-			name: 'Mess Master',
-			element: <MessMaster />,
-			route: PrivateRoute,
-		},
-
-
-
-		{
-			path: '/pages/FormMaster',
-			name: 'Form Master',
-			element: <FormMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/LnMaster',
-			name: 'LnMaster',
-			element: <LnMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ChkLnMaster',
-			name: 'CHK LN Master',
-			element: <ChkLnMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TicketMaster',
-			name: 'Ticket Master',
-			element: <TicketMaster />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/SystemLogs',
-			name: 'System Logs',
-			element: <SystemLogs />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ChkTaskMaster',
-			name: 'CHK Task Master',
-			element: <ChkTaskMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ChkInputMaster',
-			name: 'CHK Input Master',
-			element: <ChkTaskMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ChecklistMaster',
-			name: 'CheckList Master',
-			element: <ChecklistMaster />,
-			route: PrivateRoute,
-		},
-
-
-		{
-			path: '/pages/CompletedTask',
-			name: 'Completed Task',
-			element: <CompletedTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ExpireTask',
-			name: 'Expire Task',
-			element: <ExpireTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TaskPlanned',
-			name: 'Task Planned ',
-			element: <TaskPlanned />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/PendingTask',
-			name: 'Pending Task ',
-			element: <PendingTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/RunningTask',
-			name: 'Running Task ',
-			element: <RunningTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ModuleMaster',
-			name: 'ModuleMaster ',
-			element: <ModuleMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ModuleMasterinsert/:id',
-			name: 'ModuleMasterinsert ',
-			element: <ModuleMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ModuleMasterinsert',
-			name: 'ModuleMasterinsert ',
-			element: <ModuleMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProcessMaster',
-			name: 'ModuleMaster ',
-			element: <ProcessMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProcessMasterinsert/:id',
-			name: 'ProcessMasterinsert ',
-			element: <ProcessMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProcessMasterinsert',
-			name: 'ProcessMasterinsert ',
-			element: <ProcessMasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/EmployeeMaster',
-			name: 'EmployeeMasterNew ',
-			element: <EmployeeMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/EmployeeMasterinsert/:id',
-			name: 'ProcessMasterinsert ',
-			element: <EmployeeMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/EmployeeMasterinsert',
-			name: 'ProcessMasterinsert ',
-			element: <EmployeeMasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/ProjectMaster',
-			name: 'ProjectMasterNew ',
-			element: <ProjectMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectMasterinsert/:id',
-			name: 'ProjectMasterinsert ',
-			element: <ProjectMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectMasterinsert',
-			name: 'ProjectMasterinsert ',
-			element: <ProjectMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectSubmasterinsert/:id',
-			name: 'ProjectSubmasterinsert ',
-			element: <ProjectSubmasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectSubmasterinsert',
-			name: 'ProjectSubmasterinsert ',
-			element: <ProjectSubmasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/RoleMaster',
-			name: 'RoleMasterNew ',
-			element: <RoleMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/RoleMasterinsert/:id',
-			name: 'RoleMasterinsert ',
-			element: <RoleMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/RoleMasterinsert',
-			name: 'RoleMasterinsert ',
-			element: <RoleMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/IdentifierMaster',
-			name: 'IdentifierMaster ',
-			element: <IdentifierMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/IdentifierMasterinsert/:id',
-			name: 'IdentifierMasterinsert ',
-			element: <IdentifierMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/IdentifierMasterinsert',
-			name: 'IdentifierMasterinsert ',
-			element: <IdentifierMasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/MessMasterinsert/:id',
-			name: 'MessMasterinsert ',
-			element: <MessMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/MessMasterinsert',
-			name: 'MessMasterinsert ',
-			element: <MessMasterinsert />,
-			route: PrivateRoute,
-		},
-
-
-		{
-			path: '/pages/Requirementmaster',
-			name: 'Requirementmaster ',
-			element: <Requirementmaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/Requirementmasterinsert/:id',
-			name: 'Requirementmasterinsert ',
-			element: <Requirementmasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/Requirementmasterinsert',
-			name: 'Requirementmasterinsert ',
-			element: <Requirementmasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/DesignationMaster',
-			name: 'DesignationMaster ',
-			element: <DesignationMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DesignationMasterinsert/:id',
-			name: 'DesignationMasterinsert ',
-			element: <DesignationMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DesignationMasterinsert',
-			name: 'DesignationMasterinsert ',
-			element: <DesignationMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DepartmentMaster',
-			name: 'DepartmentMaster ',
-			element: <DepartmentMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DepartmentMasterinsert/:id',
-			name: 'DepartmentMasterinsert ',
-			element: <DepartmentMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/DepartmentMasterinsert',
-			name: 'DepartmentMasterinsert ',
-			element: <DepartmentMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TenderMaster',
-			name: 'TenderMaster ',
-			element: <TenderMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TenderMasterinsert/:id',
-			name: 'TenderMasterinsert ',
-			element: <TenderMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TenderMasterinsert',
-			name: 'TenderMasterinsert ',
-			element: <TenderMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrInputMaster',
-			name: 'HrInputMaster ',
-			element: <HrInputMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrInputMasterinsert/:id',
-			name: 'HrInputMasterinsert ',
-			element: <HrInputMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrInputMasterinsert',
-			name: 'HrInputMasterinsert ',
-			element: <HrInputMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrTaskMaster',
-			name: 'HrTaskMaster ',
-			element: <HrTaskMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrTaskMasterinsert/:id',
-			name: 'HrTaskMasterinsert ',
-			element: <HrTaskMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrTaskMasterinsert',
-			name: 'HrTaskMasterinsert ',
-			element: <HrTaskMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrDoerMaster',
-			name: 'HrDoerMaster ',
-			element: <HrDoerMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrDoerMasterinsert/:id',
-			name: 'HrDoerMasterinsert ',
-			element: <HrDoerMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrDoerMasterinsert',
-			name: 'HrDoerMasterinsert ',
-			element: <HrDoerMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrResumeMaster',
-			name: 'HrResumeMaster ',
-			element: <HrResumeMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrResumeMasterinsert/:id',
-			name: 'HrResumeMasterinsert ',
-			element: <HrResumeMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrResumeMasterinsert',
-			name: 'HrResumeMasterinsert ',
-			element: <HrResumeMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrCandidateMaster',
-			name: 'HrCandidateMaster ',
-			element: <HrCandidateMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrCandidateMasterinsert/:id',
-			name: 'HrCandidateMasterinsert ',
-			element: <HrCandidateMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/HrCandidateMasterinsert',
-			name: 'HrCandidateMasterinsert ',
-			element: <HrCandidateMasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/AddressMaster',
-			name: 'Address Master',
-			element: <AddressMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/AddressMasterinsert/:id',
-			name: 'AddressMasterinsert ',
-			element: <AddressMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/AddressMasterinsert',
-			name: 'AddressMasterinsert ',
-			element: <AddressMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/BankMaster',
-			name: 'BankMaster',
-			element: <BankMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/BankMasterinsert/:id',
-			name: 'BankMasterinsert ',
-			element: <BankMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/BankMasterinsert',
-			name: 'BankMasterinsert ',
-			element: <BankMasterinsert />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/FillingFrequencyMaster',
-			name: 'FillingFrequencyMaster',
-			element: <FillingFrequencyMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/FillingFrequencyMasterinsert/:id',
-			name: 'FillingFrequencyMasterinsert ',
-			element: <FillingFrequencyMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/FillingFrequencyMasterinsert',
-			name: 'FillingFrequencyMasterinsert ',
-			element: <FillingFrequencyMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ManagementContractMaster',
-			name: 'ManagementContractMaster',
-			element: <ManagementContractMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ManagementContractMasterinsert/:id',
-			name: 'ManagementContractMasterinsert ',
-			element: <ManagementContractMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ManagementContractMasterinsert',
-			name: 'ManagementContractMasterinsert ',
-			element: <ManagementContractMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectTypeMaster',
-			name: 'ProjectTypeMaster',
-			element: <ProjectTypeMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectTypeMasterinsert/:id',
-			name: 'ProjectTypeMasterinsert ',
-			element: <ProjectTypeMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProjectTypeMasterinsert',
-			name: 'ProjectTypeMasterinsert ',
-			element: <ProjectTypeMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/VendorMaster',
-			name: 'VendorMaster',
-			element: <VenderMaster />,
-			route: PrivateRoute,
-		},
-
-		{
-			path: '/pages/VendorMasterinsert/:id',
-			name: 'VendorMasterinsert ',
-			element: <VenderMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/VendorMasterinsert',
-			name: 'VendorMasterinsert ',
-			element: <VenderMasterinsert />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/MyPendingTask',
-			name: 'MyPendingTask',
-			element: <MyPendingTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProcessManualInitiation/:moduleID-Module/:processID/Process/:id',
-			name: 'ProcessManualInitiation',
-			element: <ProcessManualInitiation />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TaskMaster',
-			name: 'TaskMaster',
-			element: <TaskMasterNew />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/NotificationPage',
-			name: 'NotificationPage',
-			element: <NotificationPage />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/ProcessInitiation',
-			name: 'ProcessInitiation',
-			element: <ProcessInitiation />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/CommonMaster',
-			name: 'CommonMaster',
-			element: <CommonMaster />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/Module',
-			name: 'CommonModule',
-			element: <CommonModule />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/Process',
-			name: 'CommonProcess',
-			element: <CommonProcess />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/TrackTask',
-			name: 'TrackTask',
-			element: <TrackTask />,
-			route: PrivateRoute,
-		},
-		{
-			path: '/pages/CreateNotification',
-			name: 'CreateNotification',
-			element: <CreateNotification />,
-			route: PrivateRoute,
-		},
-
-		///////////////////////////////////////////////////////////////////////////////////////////
 		{
 			path: '/pages/contact-list',
 			name: 'Contact List',
@@ -843,7 +489,6 @@ const customPagesRoutes = {
 		},
 	],
 }
-
 
 
 // auth

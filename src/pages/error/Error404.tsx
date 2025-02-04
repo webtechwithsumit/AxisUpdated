@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 //images
 import authImg from '@/assets/images/auth-img.jpg'
 import logo from '@/assets/images/logo.png'
-import logoDark from '@/assets/images/logonew.png'
+import logoDark from '@/assets/images/logo-dark.png'
 import errorImg from '@/assets/images/svg/404.svg'
 
 const Error404 = () => {
@@ -71,7 +71,7 @@ const Error404 = () => {
 			</div>
 			<footer className="footer footer-alt fw-medium">
 				<span className="text-dark-emphasis">
-					{new Date().getFullYear()} © Arvindtechno
+					{new Date().getFullYear()} © Axis Securities
 				</span>
 			</footer>
 		</>

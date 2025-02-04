@@ -1,41 +1,27 @@
-import { Route, Navigate, RouteProps } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '@/common'; // Import your auth context
 
-// helpers
-import { useAuthContext } from '@/common'
-
-/**
- * Private Route forces the authorization before the route can be accessed
- * @param {*} param0
- * @returns
- */
-
-const PrivateRoute = ({ component: Component, roles, ...rest }: any) => {
-	const { isAuthenticated } = useAuthContext()
-	return (
-		<Route
-			{...rest}
-			render={(props: RouteProps) => {
-				if (!isAuthenticated) {
-					// not logged in so redirect to login page with the return url
-					return (
-						<Navigate
-							to={{
-								pathname: '/auth/login',
-							}}
-						/>
-					)
-				}
-
-				// check if route is restricted by role
-				if (isAuthenticated) {
-					// role not authorised so redirect to login page
-					return <Navigate to={{ pathname: '/' }} />
-				}
-				// authorised so return component
-				return <Component {...props} />
-			}}
-		/>
-	)
+interface PrivateRouteProps {
+  element: JSX.Element;
+  roles?: string[]; // Allowed roles
+  path?: string;
 }
 
-export default PrivateRoute
+const PrivateRoute = ({ element, roles = [] }: PrivateRouteProps) => {
+  const { isAuthenticated, user } = useAuthContext();
+
+  // Check if the user is authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/auth/login" />;
+  }
+
+  // Check if the user's role is allowed to access this route
+  if (roles.length > 0 && (!user || !roles.includes(user.roles))) {
+    return <Navigate to="/pages/error-404" />;
+  }
+
+  // If all checks pass, render the route element
+  return element;
+};
+
+export default PrivateRoute;

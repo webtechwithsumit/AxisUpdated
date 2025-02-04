@@ -122,7 +122,7 @@ html[data-bs-theme="dark"] {
             text-align: center;
             font-size: $menu-item-icon-size;
             line-height: $menu-item-icon-size;
-            width: $menu-item-icon-width;
+            width: 30px;
         }
     }
 
@@ -131,7 +131,7 @@ html[data-bs-theme="dark"] {
         text-rendering: auto;
         position: absolute;
         top: 50%;
-        right: calc($menu-item-padding-x * 1.5);
+        right: calc($menu-item-padding-x * 0);
         transition: transform 0.15s;
         transform: translate(-50%, -50%);
         line-height: $menu-item-icon-size;
@@ -262,10 +262,11 @@ html[data-bs-theme="dark"] {
 
 .side-nav-second-level {
     margin-top: calc($menu-item-padding-y * -0.5);
-    padding-left: 20px;
+    padding-left: 5px;
 }
 
-.side-nav-third-level,.side-nav-forth-level {
+.side-nav-third-level,
+.side-nav-forth-level {
     padding-left: calc($menu-item-padding-x * 2);
 }
 

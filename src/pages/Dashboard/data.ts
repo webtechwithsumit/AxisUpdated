@@ -18,29 +18,29 @@ interface ProjectData {
 }
 export const statistics: Statistic[] = [
 	{
-		title: 'Total Employees',
+		title: 'Daily Visits',
 		stats: '8,652',
 		change: '2.97%',
 		icon: 'ri-eye-line',
 		variant: 'text-bg-pink',
 	},
 	{
-		title: 'Active Projects',
-		stats: '14',
+		title: 'Revenue',
+		stats: '$9,254.62',
 		change: '18.25%',
 		icon: 'ri-wallet-2-line',
 		variant: 'text-bg-purple',
 	},
 	{
-		title: 'Completed Projects',
-		stats: '56',
+		title: 'Orders',
+		stats: '753',
 		change: '-5.75%',
 		icon: 'ri-shopping-basket-line',
 		variant: 'text-bg-info',
 	},
 	{
-		title: 'Total Tasks',
-		stats: '400',
+		title: 'Users',
+		stats: '63,154',
 		change: '8.21%',
 		icon: 'ri-group-2-line',
 		variant: 'text-bg-primary',
@@ -58,7 +58,7 @@ export const chatMessages = [
 	{
 		id: 2,
 		userPic: profilePic,
-		userName: 'Shikhar',
+		userName: 'Thomson',
 		text: 'Hi, How are you? What about our next meeting?',
 		postedOn: '10:01',
 	},
@@ -72,7 +72,7 @@ export const chatMessages = [
 	{
 		id: 4,
 		userPic: profilePic,
-		userName: 'Shikhar',
+		userName: 'Thomson',
 		text: "Wow that's great!",
 		postedOn: '10:03',
 	},

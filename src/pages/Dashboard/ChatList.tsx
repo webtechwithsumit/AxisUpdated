@@ -192,7 +192,7 @@ const ChatList = (props: ChatListProps) => {
 			messages.concat({
 				id: messages.length + 1,
 				userPic: profilePic,
-				userName: 'Shikhar',
+				userName: 'Thomson',
 				text: message,
 				postedOn: new Date().getHours() + ':' + new Date().getMinutes(),
 			})

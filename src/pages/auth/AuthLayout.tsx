@@ -1,13 +1,10 @@
 import React, { ReactNode, useEffect } from 'react'
 
-//images
-// import authImg from '@/assets/images/auth-img.jpg'
-import logo from '@/assets/images/logo-dark.png'
-import logoDark from '@/assets/images/logo-dark.png'
+import authImg from '@/assets/images/login-side.jpg'
+import axisBank from '@/assets/images/Axis-securities.png'
+
 
 import { Card, Col, Container, Image, Row } from 'react-bootstrap'
-// import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom';
 
 interface AccountLayoutProps {
 	pageImage?: string
@@ -31,9 +28,7 @@ const AuthLayout = ({
 	userImage,
 	starterClass,
 }: AccountLayoutProps) => {
-	const location = useLocation();
-	const isRegisterRoute = location.pathname === '/auth/register';
-	const isforgotpasswordRoute = location.pathname === '/auth/forgot-password';
+
 	useEffect(() => {
 		if (document.body) {
 			document.body.classList.add('authentication-bg', 'position-relative')
@@ -48,35 +43,40 @@ const AuthLayout = ({
 
 	return (
 		<div className="authentication-bg position-relative">
+
 			<div className="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+				<span className='position-absolute top-0 end-0 p-3 fs-4 cursor-pointer'>
+					<a href='/path/to/instruction-document.pdf' download>
+						<i className="ri-arrow-down-circle-line fs-3"></i> Download Instruction Document
+					</a>
+				</span>
 				<Container>
 					<Row className="justify-content-center">
-						<Col
-							xxl={isRegisterRoute || isforgotpasswordRoute ? 6 : 4}
-							lg={isRegisterRoute || isforgotpasswordRoute ? 6 : 4}
-						>
+						<Col lg={8}>
 
-							<Card className="overflow-hidden">
+							<Card className="overflow-hidden" style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }} >
 								<Row className="g-0">
-									{/* <Col lg={6} className="d-none d-lg-block p-2">
+									<Col lg={6} className="d-none d-lg-block p-2">
 										<Image
 											src={authImg}
 											alt=""
-											className="img-fluid rounded h-100"
+											className="img-fluid rounded h-100 "
+											style={{ objectFit: 'cover' }}
 										/>
-									</Col> */}
-									<Col lg={12}>
+									</Col>
+									<Col lg={6}>
 										<div className="d-flex flex-column h-100">
-											<div className="auth-brand px-4 pt-2 d-flex justify-content-center">
+											<div className="auth-brand px-4  d-flex justify-content-center">
+												{/* <span className='fs-1 fw-bold'> Axis Securities</span> */}
 												<a href="index.html" className="logo-light">
-													<Image src={logo} alt="logo" height="62" />
+													<Image src={axisBank} alt="logo" height="62" />
 												</a>
 												<a href="index.html" className="logo-dark">
-													<Image src={logoDark} alt="dark logo" height="62" />
+													<Image src={axisBank} alt="dark logo" height="100" />
 												</a>
 											</div>
 											<div
-												className={`p-4 my-auto ${starterClass ? 'text-center' : ''
+												className={`px-4 pb-3 pt-2 my-auto ${starterClass ? 'text-center' : ''
 													}`}
 											>
 												{userImage ? (
@@ -110,12 +110,54 @@ const AuthLayout = ({
 					{bottomLinks}
 				</Container>
 			</div>
-			<footer className="footer footer-alt fw-medium">
-				<span className="text-dark">
-					{new Date().getFullYear()} ©  Arvindtechno
-				</span>
-			</footer>
-		</div>
+			<footer className="position-absolute bottom-0 w-100  bg-white">
+
+				<div className='bg-primary'>
+					<Container>
+						<Row >
+							<Col lg={5}>
+								<span className='text-white'>
+									Click an appropriate link bottom link to download the template
+								</span>
+							</Col>
+
+						</Row>
+					</Container>
+				</div>
+
+				<div>
+					<Container >
+						<Row className='px-5 mx-5'>
+							<Col lg={6}>
+								<a href="" className="d-block ">CMC Format</a>
+								<a href="" className="d-block ">PMC Format</a>
+								<a href="" className="d-block ">Format of Discontinuation of Document</a>
+								<a href="" className="d-block ">Minor Changes Format</a>
+							</Col>
+							<Col lg={6}>
+								<a href="" className="d-block ">Guideline Document of Preparation of PMC-CMC</a>
+								<a href="" className="d-block ">Annexure I - Format for Declaration</a>
+								<a href="" className="d-block ">Annexure III - Format for Deviation Approval</a>
+								<a href="" className="d-block ">User Creation Form</a>
+							</Col>
+						</Row>
+
+					</Container>
+				</div>
+
+
+
+				<div className='d-flex justify-content-between bg-primary login-padding '>
+					<span className="text-white fs-12">
+						Copyright {new Date().getFullYear()} ©  Axis Securities, All Rights Reserved
+					</span>
+					<span className="text-white fs-12">
+						Designed and Developed by{' Clay TechSystem'}
+					</span>
+				</div>
+
+			</footer >
+		</div >
 	)
 }
 

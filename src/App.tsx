@@ -1,37 +1,20 @@
-import configureFakeBackend from './common/api/fake-backend';
-import { AuthProvider, ThemeProvider } from './common/context';
-import AllRoutes from './routes/Routes';
-import { ToastContainer } from 'react-toastify';
+import configureFakeBackend from './common/api/fake-backend'
+import { AuthProvider, ThemeProvider } from './common/context'
+import AllRoutes from './routes/Routes'
 
-import 'react-toastify/dist/ReactToastify.css';
-import './assets/scss/app.scss';
-import './assets/scss/icons.scss';
+import './assets/scss/app.scss'
+import './assets/scss/icons.scss'
 
-// Initialize fake backend
-configureFakeBackend();
+configureFakeBackend()
 
 function App() {
-  return (
-    <ThemeProvider>
-      <AuthProvider>
-        <AllRoutes />
-        <ToastContainer
-        className="toast-containers"
-          position="top-right"
-          autoClose={10000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-      </AuthProvider>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider>
+			<AuthProvider>
+				<AllRoutes />
+			</AuthProvider>
+		</ThemeProvider>
+	)
 }
 
-export default App;
-
+export default App

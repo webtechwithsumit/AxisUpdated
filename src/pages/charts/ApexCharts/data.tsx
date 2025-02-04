@@ -891,7 +891,7 @@ export const apexColumnChartOpts: ApexOptions = {
 		width: 2,
 		colors: ['transparent'],
 	},
-	colors: ['#3bc0c3', '#4489e4', '#33b0e0'],
+	colors: ['#70831d', '#0cccda', '#5c0a4e', '#ac0b0b'],
 	series: [
 		{
 			name: 'Net Profit',
@@ -904,6 +904,10 @@ export const apexColumnChartOpts: ApexOptions = {
 		{
 			name: 'Free Cash Flow',
 			data: [70, 60, 95, 82, 87, 105, 91, 114, 94],
+		},
+		{
+			name: 'Testing Data Cash Flow',
+			data: [72, 64, 95, 52, 87, 145, 91, 134, 64],
 		},
 	],
 	xaxis: {

@@ -14,7 +14,6 @@ const RangeSlider = () => {
 	return (
 		<>
 			<PageBreadcrumb title="Range Slider" subName="Extended UI" />
-			
 			<Row>
 				<Col xl={6}>
 					<Card>
@@ -81,8 +80,8 @@ const RangeSlider = () => {
 						</Card.Header>
 						<Card.Body>
 							<Nouislider
-								range={{ min: 0, max: 250 }}
-								start={[0, 115]}
+								range={{ min: 10, max: 150 }}
+								start={[20, 45]}
 								connect
 								onSlide={(render, handle, value, un, percent) =>
 									onSlide2(1, value)

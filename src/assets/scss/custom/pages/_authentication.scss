@@ -4,8 +4,9 @@
 
 // authentication pages background
 body.authentication-bg {
-    background-image: url("@/assets/images/auth-bg.jpg");
+    // background-image: url("@/assets/images/auth-bg.jpg");
     background-size: cover;
+    background: none;
 
     .account-pages {
         align-items: center;
