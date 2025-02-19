@@ -5,9 +5,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
 import RejectPopup from './RejectPopup';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Product {
@@ -80,7 +80,7 @@ const NewProductPendingCirculation = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProduct`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProduct`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {
@@ -101,7 +101,7 @@ const NewProductPendingCirculation = () => {
             <Popover id={`popover-action-${item.id}`} className="shadow">
                 <Popover.Body className="p-2">
                     <Button variant="link" as={Link as any} to={`/pages/ProductMaster/${item.id}`} className="d-block text-start">
-                        <i className="ri-file-list-line me-2"></i> Document
+                        <i className="ri-file-list-line me-2"></i> View Document
                     </Button>
                     <Button variant="link" onClick={() => handleEdit(item)} className="d-block text-start text-danger" disabled={item.isApproved === 2} >
                         <i className="ri-close-line me-2"></i> Reject
@@ -137,7 +137,7 @@ const NewProductPendingCirculation = () => {
 
         try {
             const apiUrl = `${config.API_URL}/Product/ApproveRejectProduct`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate(`/pages/AssigneeDepartment/${id}`)
                 toast.success(response.data.message || 'Approved Successfully');

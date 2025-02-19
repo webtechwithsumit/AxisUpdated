@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row, Table } from 'react-bootstrap';
 import config from '@/config';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '@/common';
 
@@ -168,7 +168,7 @@ const ProductMasterInsert = () => {
 
     const fetchPorudctDetails = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductforDoucment`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductforDoucment`, {
                 params: { ID: id },
             });
             if (response.data.isSuccess) {
@@ -188,7 +188,7 @@ const ProductMasterInsert = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {
@@ -204,10 +204,12 @@ const ProductMasterInsert = () => {
         fetchData(`CommonDropdown/GetManagerByDepartmentList?DepartmentId=${storedDepartmentID}`, setDepartmentHead, `getManagerByDepartments`);
     }, []);
 
+    console.log(product)
+
     useEffect(() => {
         const fetchPCheckList = async () => {
             try {
-                const response = await axios.get(`${config.API_URL}/CommonDropdown/GetChecklistByProductType`, {
+                const response = await axiosInstance.get(`${config.API_URL}/CommonDropdown/GetChecklistByProductType`, {
                     params: {
                         ProductType: product.productType
                     }
@@ -247,12 +249,12 @@ const ProductMasterInsert = () => {
     };
 
     const handleCheckbox = (id: number, selectedStatus: number, isMandatory: boolean) => {
-        if (isMandatory) return; // Prevent changing mandatory items
+        if (isMandatory) return;
 
         setCheckLists((prevCheckLists) =>
             prevCheckLists.map((checkList) =>
                 checkList.id === id
-                    ? { ...checkList, status: selectedStatus } // Set the selected status (1 for Yes, 0 for No)
+                    ? { ...checkList, status: selectedStatus }
                     : checkList
             )
         );
@@ -327,11 +329,6 @@ const ProductMasterInsert = () => {
             return;
         }
 
-        // if (selectedFiles.length === 0) {
-        //     toast.error('Please select files to upload');
-        //     return;
-        // }
-
         try {
             const payload = {
                 Type: types,
@@ -379,7 +376,7 @@ const ProductMasterInsert = () => {
                 formData.append('files', file, file.name);
             });
 
-            const fileUploadResponse = await axios.post(`${config.API_URL}/Product/InsertUpdateProduct`, formData, {
+            const fileUploadResponse = await axiosInstance.post(`${config.API_URL}/Product/InsertUpdateProduct`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -387,7 +384,7 @@ const ProductMasterInsert = () => {
 
             if (fileUploadResponse.status === 200) {
 
-                const checklistResponse = await axios.post(
+                const checklistResponse = await axiosInstance.post(
                     `${config.API_URL}/Product/ProductCheckList/ProductCheckList`,
                     updatedChecklists,
                     {
@@ -408,7 +405,7 @@ const ProductMasterInsert = () => {
             }
 
         } catch (error: any) {
-            toast.error('Record Add Successfully');
+            toast.error(error);
             console.error('Error submitting product:', error);
         }
     };
@@ -423,7 +420,7 @@ const ProductMasterInsert = () => {
 
     const downloadFiles = async (file: string, name: any) => {
         try {
-            const response = await axios({
+            const response = await axiosInstance({
                 method: 'GET',
                 url: `${config.API_URL}/UploadDocument/DownloadFile`,
                 params: { filename: file },
@@ -442,7 +439,9 @@ const ProductMasterInsert = () => {
         }
     };
 
-
+    const getFileName = (filePath: string) => {
+        return filePath.split(/(\\|\/)/g).pop();  // Handles both Windows and Unix file paths
+    };
 
     return (
         <>
@@ -549,7 +548,7 @@ const ProductMasterInsert = () => {
                                                     <Form.Label><i className="ri-user-add-line"></i> Assignee</Form.Label>
                                                     <Select
                                                         name="productType"
-                                                        value={employeeList.find((emp) => emp.employeeName === product.defaultAssignee)}
+                                                        value={employeeList.find((emp) => emp.userName === product.defaultAssigneeID)}
                                                         onChange={(selectedOption) => {
                                                             setProduct({
                                                                 ...product, defaultAssignee: selectedOption?.employeeName || '',
@@ -677,7 +676,7 @@ const ProductMasterInsert = () => {
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
                                                                             >
                                                                                 <i className="ri-download-2-fill me-2"></i>
-                                                                                {doc.files.split('\\').pop()}
+                                                                                {getFileName(doc.files)}
                                                                             </Button>
                                                                         </div>
                                                                     ))}
@@ -695,7 +694,7 @@ const ProductMasterInsert = () => {
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
                                                                             >
                                                                                 <i className="ri-download-2-fill me-2"></i>
-                                                                                {doc.files.split('\\').pop()}
+                                                                                {getFileName(doc.files)}
                                                                             </Button>
                                                                         </div>
                                                                     ))}
@@ -712,7 +711,7 @@ const ProductMasterInsert = () => {
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
                                                                             >
                                                                                 <i className="ri-download-2-fill me-2"></i>
-                                                                                {doc.files.split('\\').pop()}
+                                                                                {getFileName(doc.files)}
                                                                             </Button>
                                                                         </div>
                                                                     ))}

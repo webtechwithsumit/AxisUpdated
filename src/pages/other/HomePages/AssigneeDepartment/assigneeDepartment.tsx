@@ -3,10 +3,10 @@ import { Button, Col, Form, Row, Table } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import Select, { MultiValue } from 'react-select';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface AdditionalMember {
     id: string;
@@ -123,7 +123,7 @@ const AssigneeDepartment = () => {
 
     const fetchProductById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductAssign`, { params: { ProductID: id } });
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductAssign`, { params: { ProductID: id } });
             if (response.data.isSuccess) {
                 const fetchedDepartment = response.data.getProducts[0] || {};
                 setDepartments({
@@ -142,7 +142,7 @@ const AssigneeDepartment = () => {
 
     const fetchDepartmentById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProduct`, { params: { id } });
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProduct`, { params: { id } });
             if (response.data.isSuccess) {
                 const fetchedDepartment = response.data.getProducts[0];
                 setProductDetails(fetchedDepartment);
@@ -162,10 +162,28 @@ const AssigneeDepartment = () => {
         }
     };
 
+    const fetchEmployeesByDepartment = async (departmentName: string) => {
+        try {
+            const response = await axiosInstance.get(
+                `${config.API_URL}/CommonDropdown/EmployeeList?Flag=3&DepartmentName=${departmentName}`
+            );
+
+            if (response.data.isSuccess) {
+                return response.data.employees;
+            } else {
+                console.error('Failed to fetch employees for department:', departmentName);
+                return [];
+            }
+        } catch (error) {
+            console.error(`Error fetching employees for ${departmentName}:`, error);
+            return [];
+        }
+    };
+
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {
@@ -188,7 +206,7 @@ const AssigneeDepartment = () => {
     const handleMultiSelectChange = async (selectedDepartments: MultiValue<DepartmentList>) => {
         try {
             const departmentPromises = selectedDepartments.map(async (department) => {
-                const response = await axios.get(
+                const response = await axiosInstance.get(
                     `${config.API_URL}/CommonDropdown/EmployeeList?Flag=4&DepartmentName=${department.departmentName}`
                 );
 
@@ -199,8 +217,8 @@ const AssigneeDepartment = () => {
                         departmentName: department.departmentName,
                         startDate: getTodayDate(),
                         escalationDate: '',
-                        authorizedSignatory: employeeData.defaultAuthorisedSignatory || '',
-                        assignee: employeeData.defaultAssignee || '',
+                        authorizedSignatory: employeeData.defaultAuthorisedSignatoryID || '',
+                        assignee: employeeData.defaultAssigneeID || '',
                         additionalMember: [],
                     } as DepartmentDetails;
                 }
@@ -235,7 +253,7 @@ const AssigneeDepartment = () => {
         updatedList[index] = {
             ...updatedList[index],
             additionalMember: selectedOptions
-                .filter((opt): opt is EmployeeList => opt !== null) // ✅ Remove null values
+                .filter((opt): opt is EmployeeList => opt !== null)
                 .map((opt) => ({
                     id: opt.userName ?? '',
                     name: opt.employeeName ?? '',
@@ -263,13 +281,39 @@ const AssigneeDepartment = () => {
         console.log(payload)
         try {
             const apiUrl = `${config.API_URL}/Product/InsertUpdateProductAssign`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
-                navigate('/pages/ProductMaster/OwnDepartmentProduct', {
-                    state: {
-                        successMessage: `Record added successfully!`
+                const payload1 = {
+                    id: id,
+                    isApproved: 1,
+                    circulatedStatus: 1
+                }
+                console.log(payload1)
+                const apiUrl1 = `${config.API_URL}/Product/ApproveRejectProduct`;
+                const response1 = await axiosInstance.post(apiUrl1, payload1);
+                if (response1.status === 200) {
+
+                    const payload2 = {
+                        productID: id,
+                        status: 0,
                     }
-                });
+                    console.log(payload2)
+                    const apiUrl2 = `${config.API_URL}/DiscussionForm/InsertDiscussionForm`;
+                    const response2 = await axiosInstance.post(apiUrl2, payload2);
+                    if (response2.status === 200) {
+                        navigate('/pages/ProductMaster/PendingSignOff', {
+                            state: {
+                                successMessage: `Record added successfully!`
+                            }
+                        });
+
+
+                    }
+
+
+
+
+                }
             } else {
                 toast.error(response.data.message || 'Failed to process request');
             }
@@ -481,10 +525,14 @@ const AssigneeDepartment = () => {
                                             <td>
                                                 <h5>&nbsp;</h5>
                                                 <Col lg={12}>
-                                                    <Form.Group controlId={`authorizedSignatory-${index}`} className="">
+                                                    <Form.Group controlId={`authorizedSignatory-${index}`}>
                                                         <Select
                                                             name={`authorizedSignatory-${index}`}
-                                                            value={employeeList.find((emp) => emp.employeeName === department.authorizedSignatory)}
+                                                            value={employeeList.find((emp) => emp.userName === department.authorizedSignatory)}
+                                                            onFocus={async () => {
+                                                                const departmentEmployees = await fetchEmployeesByDepartment(department.departmentName);
+                                                                setEmployeeList(departmentEmployees);
+                                                            }}
                                                             onChange={(selectedOption) =>
                                                                 handleFieldChange(index, 'authorizedSignatory', selectedOption?.userName || '')
                                                             }
@@ -500,10 +548,14 @@ const AssigneeDepartment = () => {
                                             <td>
                                                 <h5>&nbsp;</h5>
                                                 <Col lg={12}>
-                                                    <Form.Group controlId={`assignee-${index}`} className="">
+                                                    <Form.Group controlId={`assignee-${index}`}>
                                                         <Select
                                                             name={`assignee-${index}`}
-                                                            value={employeeList.find((emp) => emp.employeeName === department.assignee)}
+                                                            value={employeeList.find((emp) => emp.userName === department.assignee)}
+                                                            onFocus={async () => {
+                                                                const departmentEmployees = await fetchEmployeesByDepartment(department.departmentName);
+                                                                setEmployeeList(departmentEmployees);
+                                                            }}
                                                             onChange={(selectedOption) =>
                                                                 handleFieldChange(index, 'assignee', selectedOption?.userName || '')
                                                             }
@@ -519,12 +571,16 @@ const AssigneeDepartment = () => {
                                             <td>
                                                 <h5>&nbsp;</h5>
                                                 <Col lg={12}>
-                                                    <Form.Group controlId={`additionalMember-${index}`} >
+                                                    <Form.Group controlId={`additionalMember-${index}`}>
                                                         <Select
                                                             name={`additionalMember-${index}`}
                                                             value={department.additionalMember
                                                                 .map((member) => employeeList.find((emp) => emp.userName === member.id) || null)
-                                                                .filter((emp): emp is EmployeeList => emp !== null)} // ✅ Remove null values
+                                                                .filter((emp): emp is EmployeeList => emp !== null)}
+                                                            onFocus={async () => {
+                                                                const departmentEmployees = await fetchEmployeesByDepartment(department.departmentName);
+                                                                setEmployeeList(departmentEmployees);
+                                                            }}
                                                             onChange={(selectedOptions) => handleAdditionalMemberChange(index, selectedOptions)}
                                                             getOptionLabel={(emp) => emp.employeeName}
                                                             getOptionValue={(emp) => emp.userName}
@@ -533,9 +589,9 @@ const AssigneeDepartment = () => {
                                                             placeholder="Select Additional Members"
                                                             isMulti
                                                         />
-
-
                                                     </Form.Group>
+
+
                                                 </Col>
                                             </td>
                                         </tr>

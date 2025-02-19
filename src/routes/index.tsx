@@ -18,13 +18,6 @@ const Dashboard = React.lazy(() => import('../pages/Dashboard'))
 
 // // pages
 const ProfilePages = React.lazy(() => import('../pages/other/Profile/'))
-const InvoicePages = React.lazy(() => import('../pages/other/Invoice'))
-const FAQPages = React.lazy(() => import('../pages/other/FAQ'))
-const PricingPages = React.lazy(() => import('../pages/other/Pricing'))
-const MaintenancePages = React.lazy(() => import('../pages/other/Maintenance'))
-const StarterPages = React.lazy(() => import('../pages/other/Starter'))
-const ContactListPages = React.lazy(() => import('../pages/other/ContactList'))
-const TimelinePages = React.lazy(() => import('../pages/other/Timeline'))
 
 // // Custom Pages Components
 const EmployeeMaster = React.lazy(() => import('../pages/other/HomePages/EmployeeMaster/EmployeeMaster.tsx'))
@@ -68,6 +61,7 @@ const ComposeMail = React.lazy(() => import('../pages/other/HomePages/InstantMai
 
 const Addholiday = React.lazy(() => import('../pages/other/HomePages/AddHoliday/Addholiday.tsx'))
 const AddholidayInsert = React.lazy(() => import('../pages/other/HomePages/AddHoliday/AddholidayInsert.tsx'))
+const CommingSoon = React.lazy(() => import('../pages/other/HomePages/CommingSoon.tsx'))
 
 
 
@@ -76,6 +70,7 @@ const PendingCirculation = React.lazy(() => import('../pages/other/HomePages/Pro
 const PendingSignOff = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/ProductPendingSignOff.tsx'))
 const PendingFinalSignOff = React.lazy(() => import('../pages/other/HomePages/ProductMaster/ConvenerLevel2/ProductPendingFinalSignOff.tsx'))
 const LaunchedProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/LaunchedProduct.tsx'))
+const FinalViewProduct = React.lazy(() => import('../pages/other/HomePages/ProductMaster/FinalViewProduct.tsx'))
 
 
 
@@ -259,7 +254,7 @@ const customPagesRoutes = {
 		},
 
 		{
-			path: '/pages/DiscussionForum/:id',
+			path: '/pages/DiscussionForum/:id/:department',
 			name: 'DiscussionForum',
 			element: <DiscussionForum />,
 			route: PrivateRoute,
@@ -293,9 +288,14 @@ const customPagesRoutes = {
 			element: <ApprovalTask />,
 			route: PrivateRoute,
 		},
-
 		{
-			path: '/pages/AssigneeDepartment',
+			path: '/pages/FinalViewProduct/:id',
+			name: 'FinalViewProduct',
+			element: <FinalViewProduct />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/AssigneeDepartment/:id',
 			name: 'AssigneeDepartment',
 			element: <AssigneeDepartment />,
 			route: PrivateRoute,
@@ -418,69 +418,166 @@ const customPagesRoutes = {
 			route: PrivateRoute,
 		},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		{
-			path: '/pages/invoice',
-			name: 'Invoice',
-			element: <InvoicePages />,
+			path: '/pages/CommingSoon',
+			name: 'CommingSoon',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/faq',
-			name: 'FAQ',
-			element: <FAQPages />,
+			path: '/pages/CommingSoon',
+			name: 'CommingSoon',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/pricing',
-			name: 'Pricing',
-			element: <PricingPages />,
+			path: '/pages/CommingSoon1', 
+			name: 'CommingSoon1',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/starter',
-			name: 'Starter Page',
-			element: <StarterPages />,
+			path: '/pages/CommingSoon2', 
+			name: 'CommingSoon2',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/contact-list',
-			name: 'Contact List',
-			element: <ContactListPages />,
+			path: '/pages/CommingSoon3', 
+			name: 'CommingSoon3',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
 		{
-			path: '/pages/timeline',
-			name: 'Timeline',
-			element: <TimelinePages />,
+			path: '/pages/CommingSoon4', 
+			name: 'CommingSoon4',
+			element: <CommingSoon />,
 			route: PrivateRoute,
 		},
+		{
+			path: '/pages/CommingSoon5', 
+			name: 'CommingSoon5',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon6', 
+			name: 'CommingSoon6',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon7', 
+			name: 'CommingSoon7',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon8', 
+			name: 'CommingSoon8',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon9', 
+			name: 'CommingSoon9',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon10', 
+			name: 'CommingSoon10',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon11', 
+			name: 'CommingSoon11',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon12', 
+			name: 'CommingSoon12',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon13', 
+			name: 'CommingSoon13',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon14', 
+			name: 'CommingSoon14',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon15', 
+			name: 'CommingSoon15',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon16', 
+			name: 'CommingSoon16',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon17', 
+			name: 'CommingSoon17',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon18', 
+			name: 'CommingSoon18',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon19', 
+			name: 'CommingSoon19',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+		{
+			path: '/pages/CommingSoon20', 
+			name: 'CommingSoon20',
+			element: <CommingSoon />,
+			route: PrivateRoute,
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		{
 			path: 'pages/error-404-alt',
 			name: 'Error - 404-alt',
@@ -543,12 +640,6 @@ const otherPublicRoutes = [
 		path: 'pages/error-500',
 		name: 'Error - 500',
 		element: <Error500 />,
-		route: Route,
-	},
-	{
-		path: '/pages/maintenance',
-		name: 'Maintenance',
-		element: <MaintenancePages />,
 		route: Route,
 	},
 ]

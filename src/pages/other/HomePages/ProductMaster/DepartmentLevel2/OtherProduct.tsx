@@ -5,8 +5,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
+import { useAuthContext } from '@/common';
 
 
 interface Product {
@@ -32,11 +33,11 @@ interface Column {
 
 
 const OtherProduct = () => {
+    const { user } = useAuthContext();
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [project, setProject] = useState<Product[]>([]);
-    const storedEmployeeName = localStorage.getItem('EmpName');
 
 
     const location = useLocation();
@@ -79,8 +80,8 @@ const OtherProduct = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductListByAssignee`, {
-                params: { PageIndex: currentPage, Assignee: storedEmployeeName }
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListByDepartmentName`, {
+                params: { PageIndex: currentPage, DepartmentName: user?.departmentName, Flag: 2 }
             });
             if (response.data.isSuccess) {
                 setProject(response.data.getProducts);

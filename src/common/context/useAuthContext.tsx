@@ -81,7 +81,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 			if (data.isSuccess && data.loginList) {
 				const employeeDetails = data.loginList;
-
 				const userData: User = {
 					emailID: employeeDetails.emailID,
 					userName: employeeDetails.userName,

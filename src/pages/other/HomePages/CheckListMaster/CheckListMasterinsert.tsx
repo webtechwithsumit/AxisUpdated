@@ -3,8 +3,8 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import Select from 'react-select';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Department {
@@ -12,6 +12,7 @@ interface Department {
     name: string;
     status: number;
     createdBy: string;
+    is_mandatory: boolean;
     updatedBy: string;
     productType: string;
 }
@@ -31,6 +32,7 @@ const DepartmentMasterinsert = () => {
         name: '',
         status: 0,
         createdBy: '',
+        is_mandatory: false,
         productType: '',
         updatedBy: ''
     });
@@ -61,7 +63,7 @@ const DepartmentMasterinsert = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {
@@ -80,12 +82,15 @@ const DepartmentMasterinsert = () => {
 
     const fetchDepartmentById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/CheckList/GetCheckList`, {
+            const response = await axiosInstance.get(`${config.API_URL}/CheckList/GetCheckList`, {
                 params: { id: id }
             });
             if (response.data.isSuccess) {
                 const fetchedDepartment = response.data.checkListLists[0];
-                setDepartments(fetchedDepartment);
+                setDepartments({
+                    ...fetchedDepartment,
+                    is_mandatory: Boolean(fetchedDepartment.is_mandatory) // Ensure boolean value
+                });
             } else {
                 toast.error(response.data.message || 'Failed to fetch department data');
             }
@@ -95,30 +100,46 @@ const DepartmentMasterinsert = () => {
         }
     };
 
+
+
+
     const validateFields = (): boolean => {
         const errors: { [key: string]: string } = {};
 
         if (!departments.name.trim()) {
-            errors.name = 'Department Name is required';
+            errors.name = 'CheckList Name is required';
         }
         if (departments.status === null || departments.status === undefined) {
             errors.status = 'Status is required';
+        }
+        if (!departments.productType) {
+            errors.productType = 'Product Type is required';
+        }
+        if (departments.is_mandatory === null || departments.is_mandatory === undefined) {
+            errors.is_mandatory = 'Please specify if this checklist item is mandatory.';
         }
 
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
 
+
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
-
         const parsedValue = type === 'radio' ? parseInt(value, 10) : value;
+
         setDepartments({
             ...departments,
             [name]: parsedValue
         });
     };
 
+    const handleMandatoryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setDepartments({
+            ...departments,
+            is_mandatory: e.target.checked
+        });
+    };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -138,7 +159,7 @@ const DepartmentMasterinsert = () => {
         console.log(payload)
         try {
             const apiUrl = `${config.API_URL}/CheckList/InsertUpdateCheckList`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate('/pages/CheckListMaster', {
                     state: {
@@ -240,6 +261,18 @@ const DepartmentMasterinsert = () => {
                                 </Form.Group>
                             </Col>
 
+                            <Col lg={6}>
+                                <Form.Group controlId="is_mandatory" className="mb-3">
+                                    <Form.Label>Mandatory</Form.Label>
+                                    <Form.Check
+                                        type="switch"
+                                        id="is_mandatory"
+                                        label="Mark as Mandatory"
+                                        checked={departments.is_mandatory}
+                                        onChange={handleMandatoryChange}
+                                    />
+                                </Form.Group>
+                            </Col>
                             <Col className="d-flex justify-content-end mb-3">
                                 <div>
                                     <Link to="/pages/DepartmentMaster">

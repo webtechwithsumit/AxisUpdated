@@ -4,7 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface Employee {
     id: number;
@@ -85,7 +85,7 @@ const EmployeeMasterInsert = () => {
 
     const fetchEmployeeById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Employee/GetEmployee`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Employee/GetEmployee`, {
                 params: { id }
             });
             if (response.data.isSuccess) {
@@ -102,7 +102,7 @@ const EmployeeMasterInsert = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName] as Department[]);
                 } else {
@@ -179,7 +179,7 @@ const EmployeeMasterInsert = () => {
 
         try {
             const apiUrl = `${config.API_URL}/Employee/InsertUpdateEmployee`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate('/pages/EmployeeMaster', {
                     state: {

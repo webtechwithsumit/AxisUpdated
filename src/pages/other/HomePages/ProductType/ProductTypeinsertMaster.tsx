@@ -3,7 +3,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface Employee {
     id: number;
@@ -50,7 +50,7 @@ const EmployeeMasterInsert = () => {
 
     const fetchEmployeeById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/ProductType/GetProductType`, {
+            const response = await axiosInstance.get(`${config.API_URL}/ProductType/GetProductType`, {
                 params: { id }
             });
             if (response.data.isSuccess) {
@@ -99,7 +99,7 @@ const EmployeeMasterInsert = () => {
 
         try {
             const apiUrl = `${config.API_URL}/ProductType/InsertUpdateProductType`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate('/pages/ProductTypeMaster', {
                     state: {

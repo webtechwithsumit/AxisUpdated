@@ -5,8 +5,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Product {
@@ -77,7 +77,7 @@ const ProductPendingSignOff = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetSignedOffProduct`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetSignedOffProduct`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {
@@ -158,7 +158,7 @@ const ProductPendingSignOff = () => {
 
         try {
             const apiUrl = `${config.API_URL}/Product/ApproveRejectProduct`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
 
             if (response.status === 200) {
                 toast.success(response.data.message || 'Approved Successfully');

@@ -3,8 +3,8 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import Select from 'react-select';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Department {
@@ -74,7 +74,7 @@ const DepartmentMasterinsert = () => {
 
     const fetchDepartmentById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Department/GetDepartment`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Department/GetDepartment`, {
                 params: { id: id }
             });
             if (response.data.isSuccess) {
@@ -93,7 +93,7 @@ const DepartmentMasterinsert = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {
@@ -175,7 +175,7 @@ const DepartmentMasterinsert = () => {
         console.log(payload)
         try {
             const apiUrl = `${config.API_URL}/Department/InsertUpdateDepartment`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate('/pages/departmentMaster', {
                     state: {

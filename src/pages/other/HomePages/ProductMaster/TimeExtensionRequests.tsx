@@ -6,7 +6,7 @@ import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Product {
@@ -75,7 +75,7 @@ const TimeExtensionRequests = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductListByDepartmentName`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListByDepartmentName`, {
                 params: { PageIndex: currentPage, DepartmentName: storedDepertment }
             });
             if (response.data.isSuccess) {

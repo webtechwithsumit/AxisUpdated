@@ -1,5 +1,5 @@
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import axios from "axios";
+import axiosInstance from '@/utils/axiosInstance';
 import config from "@/config";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -68,7 +68,7 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
 
         try {
             const apiUrl = `${config.API_URL}/Product/UpdateLaunchDate`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 toast.success(response.data.message || 'Product Launched Successfully');
             } else {

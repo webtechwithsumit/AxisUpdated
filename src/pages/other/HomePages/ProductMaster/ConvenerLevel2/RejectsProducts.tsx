@@ -4,10 +4,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
 import { useAuthContext } from '@/common';
 import DateFormatter from '@/pages/other/Component/DateComponent';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Product {
@@ -82,7 +82,7 @@ const RejectedProducts = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductListForRejection`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListForRejection`, {
                 params: { PageIndex: currentPage, RoleName: user?.roles, DepartmentName: user?.departmentName },
             });
             if (response.data.isSuccess) {

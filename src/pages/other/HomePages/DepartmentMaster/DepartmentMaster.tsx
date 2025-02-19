@@ -8,7 +8,7 @@ import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 
@@ -90,7 +90,7 @@ const DesignationMaster = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Department/GetDepartment`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Department/GetDepartment`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {
@@ -131,7 +131,7 @@ const DesignationMaster = () => {
 
         query = query.endsWith('&') ? query.slice(0, -1) : query;
         const apiUrl = `${config.API_URL}/DepartmentMaster/SearchDepartment${query}`;
-        axios.get(apiUrl, { headers: { 'accept': '*/*' } })
+        axiosInstance.get(apiUrl, { headers: { 'accept': '*/*' } })
             .then((response) => {
                 console.log("search response ", response.data.departments);
                 setDesignations(response.data.departments)
@@ -147,7 +147,7 @@ const DesignationMaster = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {

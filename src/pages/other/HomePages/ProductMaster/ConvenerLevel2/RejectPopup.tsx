@@ -1,9 +1,9 @@
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import axios from "axios";
 import config from "@/config";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAuthContext } from "@/common";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface ProductDetails {
     id: number;
@@ -58,7 +58,7 @@ const RejectPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
 
         try {
             const apiUrl = `${config.API_URL}/Product/ApproveRejectProduct`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 toast.warning(response.data.message || 'Rejected Successfully');
             } else {

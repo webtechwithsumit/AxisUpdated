@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
 import { useAuthContext } from '@/common';
 
@@ -79,7 +79,7 @@ const OwnProduct = () => {
   const fetchDetailsMain = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/Product/GetProductListByDepartmentName`, {
+      const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListByDepartmentName`, {
         params: { PageIndex: currentPage, DepartmentName: user?.departmentName, FLag: 1 }
       });
       if (response.data.isSuccess) {

@@ -67,12 +67,12 @@ const AuthLayout = ({
 									<Col lg={6}>
 										<div className="d-flex flex-column h-100">
 											<div className="auth-brand px-4  d-flex justify-content-center">
-												{/* <span className='fs-1 fw-bold'> Axis Securities</span> */}
+												{/* <span className='fs-1 fw-bold'> Axis-Securities</span> */}
 												<a href="index.html" className="logo-light">
 													<Image src={axisBank} alt="logo" height="62" />
 												</a>
-												<a href="index.html" className="logo-dark">
-													<Image src={axisBank} alt="dark logo" height="100" />
+												<a href="index.html" className="logo-dark p-2">
+													<Image src={axisBank} alt="dark logo" height="80" />
 												</a>
 											</div>
 											<div
@@ -149,10 +149,10 @@ const AuthLayout = ({
 
 				<div className='d-flex justify-content-between bg-primary login-padding '>
 					<span className="text-white fs-12">
-						Copyright {new Date().getFullYear()} ©  Axis Securities, All Rights Reserved
+						Copyright {new Date().getFullYear()} ©  Axis-Securities, All Rights Reserved
 					</span>
 					<span className="text-white fs-12">
-						Designed and Developed by{' Clay TechSystem'}
+						Designed and Developed by{' Axis-Securities'}
 					</span>
 				</div>
 

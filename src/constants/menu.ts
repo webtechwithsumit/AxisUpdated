@@ -173,7 +173,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
 	},
 
 	{
-		key: 'Approval',
+		key: 'ApprovalTask',
 		label: 'Approval',
 		icon: 'ri-loop-left-line',
 		children: [
@@ -182,7 +182,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
 				label: 'Pending Approvals',
 				url: '/pages/ApprovalTask',
 				icon: 'ri-slideshow-line',
-				parentKey: 'Approval',
+				parentKey: 'ApprovalTask',
 			},
 			// {
 			//   key: 'SubTask Master',
@@ -197,46 +197,30 @@ const MENU_ITEMS: MenuItemTypes[] = [
 
 
 
-	{
-		key: 'Collaboration',
-		label: 'Collaboration',
-		url: '/pages/AdhocTempleteList',
-		icon: 'ri-chat-1-line',
-		roles: ['Convener level 2'],
-		children: [
-			{
-				key: 'MIS',
-				label: 'Discussion Forum',
-				url: '/pages/DiscussionForum',
-				icon: 'ri-slideshow-line',
-				parentKey: 'Collaboration',
-			},
-			{
-				key: 'MIS',
-				label: 'Remarks and Comment',
-				url: '/pages',
-				icon: 'ri-slideshow-line',
-				parentKey: 'Collaboration',
-			},
-		],
-	},
+	// {
+	// 	key: 'Collaboration',
+	// 	label: 'Collaboration',
+	// 	url: '/pages/AdhocTempleteList',
+	// 	icon: 'ri-chat-1-line',
+	// 	roles: ['Convener level 2'],
+	// 	children: [
+	// 		{
+	// 			key: 'Discussion Forum',
+	// 			label: 'Discussion Forum',
+	// 			url: '/pages/CommingSoon1',
+	// 			icon: 'ri-slideshow-line',
+	// 			parentKey: 'Collaboration',
+	// 		},
+	// 		{
+	// 			key: 'Remarks and Comment',
+	// 			label: 'Remarks and Comment',
+	// 			url: '/pages/CommingSoon2',
+	// 			icon: 'ri-slideshow-line',
+	// 			parentKey: 'Collaboration',
+	// 		},
+	// 	],
+	// },
 
-
-	{
-		key: 'memReports',
-		label: 'Reports',
-		url: '/pages/AdhocTempleteList',
-		icon: 'ri-bar-chart-2-line',
-		children: [
-			{
-				key: 'MIS',
-				label: 'Member Report',
-				url: '/pages',
-				icon: 'ri-slideshow-line',
-				parentKey: 'memReports',
-			},
-		],
-	},
 	{
 		key: 'Reports',
 		label: 'Reports',
@@ -245,37 +229,37 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		roles: ['Convener level 2'],
 		children: [
 			{
-				key: 'MIS',
+				key: 'MProduct Status ReportsIS',
 				label: 'Product Status Reports',
-				url: '/pages',
+				url: '/pages/CommingSoon3',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Reports',
 			},
 			{
-				key: 'MIS',
+				key: 'Task Performance Report',
 				label: 'Task Performance Report',
-				url: '/pages',
+				url: '/pages/CommingSoon4',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Reports',
 			},
 			{
-				key: 'MIS',
+				key: 'Observation  Reports',
 				label: 'Observation  Reports',
-				url: '/pages',
+				url: '/pages/CommingSoon5',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Reports',
 			},
 			{
-				key: 'MIS',
+				key: 'Escltion  Repaorts',
 				label: 'Esclation  Reports',
-				url: '/pages',
+				url: '/pages/CommingSoon6',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Reports',
 			},
 			{
-				key: 'MIS',
+				key: 'Audit Logs',
 				label: 'Audit Logs',
-				url: '/pages',
+				url: '/pages/CommingSoon7',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Reports',
 			},
@@ -288,16 +272,16 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		icon: 'ri-mail-send-line',
 		children: [
 			{
-				key: 'MIS',
+				key: 'Manage Mail',
 				label: 'Manage Mail',
-				url: '/pages',
+				url: '/pages/CommingSoon8',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Email',
 			},
 			{
-				key: 'MIS',
+				key: 'Notification',
 				label: 'Notification',
-				url: '/pages',
+				url: '/pages/CommingSoon9',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Email',
 			},
@@ -311,16 +295,16 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		roles: ['Convener level 2'],
 		children: [
 			{
-				key: 'MIS',
+				key: 'Agreements',
 				label: 'Agreements',
-				url: '/pages',
+				url: '/pages/CommingSoon10',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Legal Management',
 			},
 			{
-				key: 'MIS',
+				key: 'Approval Workflow',
 				label: 'Approval Workflow',
-				url: '/pages',
+				url: '/pages/CommingSoon11',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Legal Management',
 			},
@@ -333,23 +317,23 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		icon: 'ri-tools-line',
 		children: [
 			{
-				key: 'MIS',
+				key: 'Template Management',
 				label: 'Template Management',
-				url: '/pages',
+				url: '/pages/CommingSoon12',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Admin Setting',
 			},
 			{
-				key: 'MIS',
+				key: 'Esclation Metrix',
 				label: 'Esclation Metrix',
-				url: '/pages',
+				url: '/pages/CommingSoon13',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Admin Setting',
 			},
 			{
-				key: 'MIS',
+				key: 'System Configuration',
 				label: 'System Configuration',
-				url: '/pages',
+				url: '/pages/CommingSoon14',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Admin Setting',
 			},
@@ -362,16 +346,16 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		icon: 'ri-user-settings-line',
 		children: [
 			{
-				key: 'MIS',
+				key: 'Profile Management',
 				label: 'Profile Management',
-				url: '/pages',
+				url: '/pages/CommingSoon15',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Profile',
 			},
 			{
-				key: 'MIS',
+				key: 'Access Rights',
 				label: 'Access Rights',
-				url: '/pages',
+				url: '/pages/CommingSoon16',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Profile',
 			},
@@ -385,16 +369,16 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		roles: ['Convener level 2'],
 		children: [
 			{
-				key: 'MIS',
+				key: 'Process Configuration',
 				label: 'Process Configuration ',
-				url: '/pages',
+				url: '/pages/CommingSoon17',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Analytics',
 			},
 			{
-				key: 'MIS',
+				key: 'Bulk Operation',
 				label: 'Bulk Operation ',
-				url: '/pages',
+				url: '/pages/CommingSoon18',
 				icon: 'ri-slideshow-line',
 				parentKey: 'Analytics',
 			},
@@ -408,18 +392,18 @@ const MENU_ITEMS: MenuItemTypes[] = [
 		icon: 'ri-question-mark',
 		children: [
 			{
-				key: 'MIS',
+				key: 'User Guide',
 				label: 'User Guide',
-				url: '/pages',
+				url: '/pages/CommingSoon19',
 				icon: 'ri-slideshow-line',
-				parentKey: 'Analytics',
+				parentKey: 'userGuide',
 			},
 			{
-				key: 'MIS',
+				key: 'Support',
 				label: 'Support',
-				url: '/pages',
+				url: '/pages/CommingSoon20',
 				icon: 'ri-slideshow-line',
-				parentKey: 'Analytics',
+				parentKey: 'userGuide',
 			},
 		],
 	},

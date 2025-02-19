@@ -11,7 +11,6 @@ export default function useLogin() {
 
 	const { isAuthenticated, saveSession } = useAuthContext();
 
-	// Determine redirect URL after login
 	const redirectUrl = useMemo(
 		() => (location.state && location.state.from ? location.state.from.pathname : '/'),
 		[location.state]
@@ -45,7 +44,7 @@ export default function useLogin() {
 					throw new Error('Invalid login response: Missing required fields');
 				}
 
-				localStorage.setItem('userRoles', employeeDetails.departmentName)
+				localStorage.setItem('userRoles', employeeDetails.roleName)
 				// Save session in authentication context
 				saveSession({
 					employeeName: employeeDetails.employeeName || '',

@@ -1,11 +1,8 @@
 import { Button, Card, Col, Image, Nav, Row, Tab } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { profileActivity } from './data'
-import React from 'react'
 
 // images
 import bgProfile from '@/assets/images/bg-profile.jpg'
-import avatar1 from '@/assets/images/users/avatar-1.jpg'
 
 // components
 import { FormInput } from '@/components'
@@ -29,7 +26,7 @@ const ProfilePages = () => {
 								<Col sm={6}>
 									<div className="profile-user-img">
 										<Image
-											src={avatar1}
+											src='/'
 											className="avatar-lg rounded-circle"
 											alt="user"
 										/>
@@ -164,52 +161,7 @@ const ProfilePages = () => {
 											</Tab.Pane>
 											<Tab.Pane eventKey="Activities" id="user-activities">
 												<div className="timeline-2">
-													{(profileActivity || []).map((activity, idx) => {
-														return (
-															<div key={idx} className="time-item">
-																<div className="item-info ms-3 mb-3">
-																	<div className="text-muted">
-																		{activity.time}
-																	</div>
-																	<p>
-																		<Link to="#" className="text-info">
-																			{activity.name}
-																		</Link>{' '}
-																		{activity.title}
-																		{activity.subName && (
-																			<React.Fragment>
-																				<Link to="#" className="text-success">
-																					John Doe
-																				</Link>
-																				.
-																			</React.Fragment>
-																		)}
-																	</p>
-																	{activity.image &&
-																		(activity.image || []).map((image, idx) => {
-																			return (
-																				<Image
-																					key={idx}
-																					src={image}
-																					height={40}
-																					width={60}
-																					className="rounded-1 me-1"
-																				/>
-																			)
-																		})}
-																	{!activity.image && (
-																		<p>
-																			<em>
-																				"Lorem ipsum dolor sit amet, consectetur
-																				adipiscing elit. Aliquam laoreet tellus
-																				ut tincidunt euismod. "
-																			</em>
-																		</p>
-																	)}
-																</div>
-															</div>
-														)
-													})}
+
 												</div>
 											</Tab.Pane>
 											<Tab.Pane eventKey="Settings" id="edit-profile">

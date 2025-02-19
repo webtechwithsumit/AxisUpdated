@@ -1,11 +1,11 @@
 import config from '@/config';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Card, Col, Row, Table, Button, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import DateFormatter from '../../Component/DateComponent';
 import { useAuthContext } from '@/common';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface DiscussionForm {
     id: number;
@@ -47,7 +47,7 @@ interface Product {
 }
 
 const DiscussionForum = () => {
-    const { id } = useParams<{ id: any }>();
+    const { id, department } = useParams();
     const [discussion, setDiscussion] = useState<Product | null>(null);
     const [loading, setLoading] = useState(false);
     const [currentUserComment, setCurrentUserComment] = useState<string>('');
@@ -60,11 +60,16 @@ const DiscussionForum = () => {
         }
     }, [id]);
 
+    const lastDiscussionEntry = discussion?.getDiscussionForms[discussion.getDiscussionForms.length - 1];
+
     const fetchDiscussion = async (id: any) => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductCirculatedListForSignOff`, {
-                params: { id }
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetDiscussionFormSummaryList`, {
+                params: {
+                    productId: id,
+                    departmentName: user?.roleName === 'Convener level 2' ? department : user?.departmentName
+                }
             });
             if (response.data.isSuccess) {
                 setDiscussion(response.data.getProducts[0]);
@@ -78,6 +83,8 @@ const DiscussionForum = () => {
         }
     };
 
+
+
     const handleUserCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setCurrentUserComment(e.target.value);
     };
@@ -87,20 +94,22 @@ const DiscussionForum = () => {
     };
 
     const saveComment = async () => {
-        const formData = discussion!.getDiscussionForms[1];
+        const formData = discussion!.getDiscussionForms[0];
         const payload = {
-            productID: discussion?.id,
+            productID: id,
             adminComment: currentAdminComment || formData.adminComment,
             userComment: currentUserComment,
             createdBy: user?.employeeName,
+            departmentName: user?.departmentName,
+            // departmentName: department,
             createdDate: new Date().toISOString(),
             updatedBy: null,
             updatedDate: null,
             status: 0,
         };
-
+        console.log(payload)
         try {
-            const response = await axios.post(
+            const response = await axiosInstance.post(
                 `${config.API_URL}/DiscussionForm/InsertDiscussionForm`,
                 payload
             );
@@ -121,20 +130,16 @@ const DiscussionForum = () => {
 
     const handleMarkAsResolved = async (discussionFormId: any) => {
         try {
-            const formData = discussion!.getDiscussionForms[0];
+            // const formData = discussion!.getDiscussionForms[0];
 
             const payload = {
                 productID: discussionFormId,
-                adminComment: currentAdminComment || formData.adminComment,
-                userComment: currentUserComment,
-                createdBy: user?.employeeName,
-                createdDate: new Date().toISOString(),
-                updatedBy: null,
-                updatedDate: null,
+                departmentName: user?.departmentName,
                 status: 1,
             };
+            console.log(payload)
 
-            const response = await axios.post(
+            const response = await axiosInstance.post(
                 `${config.API_URL}/DiscussionForm/InsertDiscussionForm`,
                 payload
             );
@@ -201,7 +206,7 @@ const DiscussionForum = () => {
                                                 <span className="text-primary fs-16 fw-bold">End Date : </span>
                                             </Col>
                                             <Col lg={4}>
-                                                <span className="text-primary fs-16 fw-bold">Drpartment Tread : </span>
+                                                <span className="text-primary fs-16 fw-bold">Department Thread : </span>
                                             </Col>
                                         </Row>
                                     </div>
@@ -226,12 +231,15 @@ const DiscussionForum = () => {
                                                             <strong>{discussion.getDiscussionForms[0].createdBy}</strong>
                                                             <strong>{discussion.getDiscussionForms[0].createdDate}</strong>
                                                         </div>
-                                                            <textarea
+                                                            {/* <textarea
                                                                 rows={4}
                                                                 value={discussion.getDiscussionForms[0].adminComment}
                                                                 disabled
                                                                 className="form-control mb-2"
-                                                            />
+                                                            /> */}
+                                                            <div className='border-primary border p-2 rounded'>
+                                                                <span>{discussion.getDiscussionForms[0].adminComment}</span>
+                                                            </div>
                                                         </div>
                                                     ) : (
                                                         <div>
@@ -275,13 +283,22 @@ const DiscussionForum = () => {
                                                 </td>
                                                 <td className=''>
                                                     <div className="text-center">
-                                                        <Button variant="success" onClick={saveComment} className='me-2'>Save Comment</Button>
-                                                        {user?.employeeName === discussion.createdBy ? (
+                                                        {lastDiscussionEntry?.status !== 1 &&
+                                                            <Button variant="success" onClick={saveComment} className='me-2'>Save Comment</Button>
+                                                        }
+                                                        {user?.employeeName === discussion.getDiscussionForms[0]?.createdBy ? (
+                                                            // <Button
+                                                            //     variant="info"
+                                                            //     onClick={() => handleMarkAsResolved(discussion.getDiscussionForms[0].id)}
+                                                            // >
+                                                            //     Mark as Resolved
+                                                            // </Button>
                                                             <Button
-                                                                variant="info"
-                                                                onClick={() => handleMarkAsResolved(discussion.getDiscussionForms[0].id)}
+                                                                variant={lastDiscussionEntry?.status === 1 ? "secondary" : "info"}
+                                                                disabled={lastDiscussionEntry?.status === 1}
+                                                                onClick={() => lastDiscussionEntry?.status !== 1 && handleMarkAsResolved(lastDiscussionEntry?.id)}
                                                             >
-                                                                Mark as Resolved
+                                                                {lastDiscussionEntry?.status === 1 ? "Resolved" : "Mark as Resolved"}
                                                             </Button>
                                                         ) : null
                                                         }

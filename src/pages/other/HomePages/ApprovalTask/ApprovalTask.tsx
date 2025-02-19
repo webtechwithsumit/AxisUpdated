@@ -3,12 +3,13 @@ import { Button, Table, Container, Row, Col, Alert, Form, ButtonGroup, Collapse,
 import { Link } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
-import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import PaginationComponent from '../../Component/PaginationComponent';
-import axios from 'axios';
+// import PaginationComponent from '../../Component/PaginationComponent';
 import ApprovalPopup from './ApprovalPopup';
+import { useAuthContext } from '@/common';
+import DateFormatter from '../../Component/DateComponent';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Manager {
@@ -18,9 +19,21 @@ interface Manager {
     status: number;
     createdBy: string;
     updatedBy: string;
-    downloadDocuments: DocumentItem[];
+    productName: string;
+    departmentName: string;
+    endDate: string;
+    createdDate: string;
     getProductChecklistByProductNames: ProductChecklist[];
+    downloadDocuments: DocumentProduct[];  // <-- Add this line
 }
+
+interface DocumentProduct {
+    id: number;
+    type: string;
+    files: string;
+    fileUrls: string[];
+}
+
 
 interface DocumentItem {
     files: string;
@@ -29,7 +42,7 @@ interface DocumentItem {
 
 interface ProductChecklist {
     name: string;
-    status: number; // Assuming status is a number (1 for checked, 0 for unchecked)
+    status: number;
 }
 
 interface Column {
@@ -38,31 +51,19 @@ interface Column {
     visible: boolean;
 }
 
-interface EmployeeList {
-    empId: string;
-    employeeName: string;
-}
-
-interface ModuleProjectList {
-    id: string;
-    projectName: string
-    moduleName: string
-}
 
 
 const EmployeeMaster = () => {
+    const { user } = useAuthContext();
     const [employee, setEmployee] = useState<Manager[]>([]);
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [employeeList, setEmployeeList] = useState<EmployeeList[]>([]);
-    const [projectList, setProjectList] = useState<ModuleProjectList[]>([])
-    const [searchTriggered, setSearchTriggered] = useState(false);
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const [totalPages, setTotalPages] = useState(1);
     const [show, setShow] = useState(false);
     const [showReject, setShowReject] = useState(false);
     const [manageId, setManageID] = useState<number>();
     const [expandedRow, setExpandedRow] = useState<number | null>(null); // For row expansion
-    const storedEmployeeName = localStorage.getItem('EmpId');
+
 
 
     const location = useLocation();
@@ -83,7 +84,7 @@ const EmployeeMaster = () => {
         { id: 'productType', label: 'Product Type ', visible: true },
         { id: 'departmentName', label: 'Department Name ', visible: true },
         { id: 'createdDate', label: 'Start Date ', visible: true },
-        // { id: 'status', label: 'Status ', visible: true },
+        // { id: 'status', label: 'Status ', visible: true },   
 
 
     ]);
@@ -99,74 +100,19 @@ const EmployeeMaster = () => {
 
 
 
-    const [searchEmployee, setSearchEmployee] = useState('');
-    const [searchProject, setSearchProject] = useState('');
-    const [searchAppAccessLevel, setSearchAppAccessLevel] = useState('');
-    const [searchDataAccessLevel, setSearchDataAccessLevel] = useState('');
-    const [searchAppAccess, setSearchAppAccess] = useState('');
-    const [searchEmpstatus, setSearchEmpstatus] = useState('');
-
-
 
     useEffect(() => {
-        if (!searchTriggered) {
-            fetchEmployee();
-        }
-    }, [currentPage]);
-
-    useEffect(() => {
-        if (searchTriggered) {
-            if (searchEmployee || searchProject || searchAppAccessLevel || searchDataAccessLevel || searchAppAccess || searchEmpstatus) {
-                (async () => {
-                    await handleSearch();
-                })();
-            } else {
-                fetchEmployee();
-            }
-        }
-    }, [searchTriggered, currentPage]);
+        fetchEmployee();
+    }, []);
 
 
-    const handleSearch = async () => {
-        try {
-            let query = `?`;
-
-            if (searchEmployee) query += `EmployeeName=${searchEmployee}&`;
-            if (searchProject) query += `CurrentProjectName=${searchProject}&`;
-            if (searchAppAccessLevel) query += `AppAccessLevel=${searchAppAccessLevel}&`;
-            if (searchDataAccessLevel) query += `DataAccessLevel=${searchDataAccessLevel}&`;
-            if (searchAppAccess) query += `AppAccess=${searchAppAccess}&`;
-            if (searchEmpstatus) query += `EmpStatus=${searchEmpstatus}&`;
-            query += `PageIndex=${currentPage}`;
-            query = query.endsWith('&') ? query.slice(0, -1) : query;
-
-            const apiUrl = `${config.API_URL}/EmployeeMaster/SearchEmployee${query}`;
-            console.log("API URL:", apiUrl);
-
-            setLoading(true);
-
-            const { data } = await axios.get(apiUrl, { headers: { accept: '*/*' } });
-
-            if (data.isSuccess) {  // Ensure successful response
-                setEmployee(data.employeeMasterList);
-                setTotalPages(Math.ceil(data.totalCount / 10));
-                console.log("Search Response:", data.employeeMasterList);
-            } else {
-                console.log("Error in API response:", data.message);  // Handle error message if needed
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
 
     const downloadFiles = async (file: string, name: any) => {
         console.log(file)
         console.log(name)
         try {
-            const response = await axios({
+            const response = await axiosInstance({
                 method: 'GET',
                 url: `${config.API_URL}/UploadDocument/DownloadFile`,
                 params: { filename: file },
@@ -187,29 +133,17 @@ const EmployeeMaster = () => {
 
 
 
-    const handleClear = async () => {
-        setCurrentPage(1);
-        setSearchEmployee('');
-        setSearchProject('');
-        setSearchAppAccessLevel('');
-        setSearchDataAccessLevel('');
-        setSearchAppAccess('');
-        setSearchEmpstatus('');
-        setSearchTriggered(false);
-        await new Promise(resolve => setTimeout(resolve, 200));
-        await fetchEmployee();
-    };
 
     console.log(employee)
     const fetchEmployee = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductListByAssignee`, {
-                params: { Assignee: storedEmployeeName }
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListByAssignee`, {
+                params: { Assignee: user?.userName }
             });
             if (response.data.isSuccess) {
                 setEmployee(response.data.getProducts);
-                setTotalPages(Math.ceil(response.data.totalCount / 10));
+                // setTotalPages(Math.ceil(response.data.totalCount / 10));
             } else {
                 console.error(response.data.message);
             }
@@ -222,41 +156,8 @@ const EmployeeMaster = () => {
     };
 
 
-    useEffect(() => {
-        const fetchData = async (endpoint: string, setter: Function, listName: string) => {
-            try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
-                if (response.data.isSuccess) {
-                    setter(response.data[listName]);
-                } else {
-                    console.error(response.data.message);
-                }
-            } catch (error) {
-                console.error(`Error fetching data from ${endpoint}:`, error);
-            }
-        };
 
-        fetchData('CommonDropdown/GetEmployeeListWithId', setEmployeeList, 'employeeLists');
-        fetchData('CommonDropdown/GetProjectList', setProjectList, 'projectListResponses');
-    }, []);
-
-
-    const optionsEmpStatus = [
-        { value: 'Current', label: 'Current' },
-        { value: 'Former', label: 'Former' },
-        { value: 'Absconding', label: 'Absconding' },
-    ];
-
-
-    // const handleShow = () => setShow(true);
     const handleShowReject = () => setShowReject(true);
-
-
-    // const handleEdit = (id: any) => {
-    //     handleShow();
-    //     setManageID(id)
-
-    // };
     const handleReject = (id: any) => {
         handleShowReject();
         setManageID(id)
@@ -265,6 +166,33 @@ const EmployeeMaster = () => {
 
     const toggleExpandRow = (id: number) => {
         setExpandedRow(expandedRow === id ? null : id);
+    };
+
+    const handleSubmit = async (id: any) => {
+        toast.dismiss();
+        const payload = {
+            productID: id,
+            departmentName: user?.departmentName,
+            status: 1,
+        };
+        console.log(payload)
+
+        try {
+            const apiUrl = `${config.API_URL}/DiscussionForm/InsertDiscussionForm`;
+            const response = await axiosInstance.post(apiUrl, payload);
+            if (response.status === 200) {
+                toast.success(response.data.message || 'Signed Off Successfully');
+            } else {
+                toast.error(response.data.message || 'Failed to process request');
+            }
+        } catch (error: any) {
+            toast.error(error.message || 'Error Adding/Updating');
+            console.error('Error submitting employee:', error);
+        }
+    };
+
+    const getFileName = (filePath: string) => {
+        return filePath.split(/(\\|\/)/g).pop();
     };
 
 
@@ -278,90 +206,7 @@ const EmployeeMaster = () => {
                     <h4 className='text-primary d-flex align-items-center m-0 p-1'><i className="ri-file-list-line me-2 text-primary "></i>  Pending Approval </h4>
                 </div>
             </Row>
-            <div className='bg-white p-2 pb-2'>
-                <Form
-                    onSubmit={async (e) => {
-                        e.preventDefault();
-                        setSearchTriggered(true);
-                        await setCurrentPage(1);
 
-                    }}
-                >
-                    <Row>
-                        <Col lg={4} className="mt-2">
-                            <Form.Group controlId="searchEmployee">
-                                <Form.Label>Product Name</Form.Label>
-                                <Select
-                                    name="searchEmployee"
-                                    value={employeeList.find(emp => emp.employeeName === searchEmployee) || null} // handle null
-                                    onChange={(selectedOption) => setSearchEmployee(selectedOption ? selectedOption.employeeName : "")} // null check
-                                    options={employeeList}
-                                    getOptionLabel={(emp) => emp.employeeName}
-                                    getOptionValue={(emp) => emp.employeeName.split('-')[0].trim()}
-                                    isSearchable={true}
-                                    placeholder="Select Product Name"
-                                    className="h45"
-                                />
-                            </Form.Group>
-                        </Col>
-
-                        <Col lg={4} className="mt-2">
-                            <Form.Group controlId="searchProject">
-                                <Form.Label>Department Name</Form.Label>
-                                <Select
-                                    name="searchProject"
-                                    value={projectList.find(item => item.projectName === searchProject)}
-                                    onChange={(selectedOption) => setSearchProject(selectedOption ? selectedOption.projectName : '')}
-                                    options={projectList}
-                                    getOptionLabel={(task) => task.projectName}
-                                    getOptionValue={(task) => task.projectName}
-                                    isSearchable={true}
-                                    placeholder="Select Department Name"
-                                    className="h45"
-                                />
-                            </Form.Group>
-                        </Col>
-
-
-
-                        <Col lg={4} className="mt-2">
-                            <Form.Group controlId="searchEmpstatus">
-                                <Form.Label>Employee Status</Form.Label>
-                                <Select
-                                    name="searchEmpstatus"
-                                    options={optionsEmpStatus}
-                                    value={optionsEmpStatus.find(option => option.value === searchEmpstatus) || null}
-                                    onChange={(selectedOption) => setSearchEmpstatus(selectedOption?.value || '')}
-                                    placeholder="Select Employee Status"
-                                />
-                            </Form.Group>
-                        </Col>
-
-                        <Col></Col>
-
-                        <Col lg={4} className="align-items-end d-flex justify-content-end mt-3">
-                            <ButtonGroup aria-label="Basic example" className="w-100">
-                                <Button type="button" variant="primary" onClick={handleClear}>
-                                    <i className="ri-loop-left-line"></i>
-                                </Button>
-                                &nbsp;
-                                <Button type="submit" variant="primary"
-
-                                >
-                                    Search
-                                </Button>
-                            </ButtonGroup>
-                        </Col>
-                    </Row>
-                </Form>
-
-                <Row className='mt-3'>
-                    <div className="d-flex justify-content-end bg-light p-1">
-                        <div className="app-search d-none d-lg-block me-4">
-                        </div>
-                    </div>
-                </Row>
-            </div>
 
             {loading ? (
                 <div className='loader-container'>
@@ -419,7 +264,7 @@ const EmployeeMaster = () => {
                                                         </Draggable>
                                                     ))}
                                                     {provided.placeholder}
-                                                    <th className='text-center pr-3'>View</th>
+                                                    <th className='text-center'>View</th>
                                                 </tr>
                                             )}
                                         </Droppable>
@@ -439,13 +284,15 @@ const EmployeeMaster = () => {
                                                                             <br />
                                                                         </span>
                                                                     ))
-                                                                    : (item[col.id as keyof Manager] as string | number)
+                                                                    : col.id === 'createdDate' ? (
+                                                                        <DateFormatter dateString={item.createdDate} />
+                                                                    ) : (item[col.id as keyof Manager] as string | number)
                                                                 }
                                                             </td>
 
                                                         ))}
 
-                                                        <td className='text-end pr-3'>
+                                                        <td className='text-center'>
                                                             <Button onClick={() => toggleExpandRow(item.id)}>
                                                                 {expandedRow === item.id ? <i className=" fs-16 ri-arrow-up-s-line"></i> : <i className=" fs-16 ri-arrow-down-s-line"></i>}
                                                             </Button>
@@ -460,13 +307,12 @@ const EmployeeMaster = () => {
 
                                                                         <div className='my-3'>
                                                                             <Row className='mb-2'>
-                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> Product : </span> <span className='text-dark'>National Paision System (NPS)</span></Col>
-                                                                                <Col lg={4}> <span className='text-primary  fs-16 fw-bold'> Product Department : </span> <span className='text-dark'>PRODUCT</span></Col>
-                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> Start Date : </span> <span className='text-dark'>31/12/2024</span></Col>
+                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> Product : </span> <span className='text-dark'>{item?.productName}</span></Col>
+                                                                                <Col lg={4}> <span className='text-primary  fs-16 fw-bold'> Product Department : </span> <span className='text-dark'>{item?.departmentName}</span></Col>
+                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> Start Date : </span> <span className='text-dark'> <DateFormatter dateString={item.createdDate} /></span></Col>
                                                                             </Row>
                                                                             <Row>
-                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> End Date : </span> <span className='text-dark'> -</span></Col>
-                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'>  Department Thread : </span> <span className='text-dark'>CUSTOMER SERVICE AND CALL&TRADE</span></Col>
+                                                                                <Col lg={4}> <span className='text-primary fs-16 fw-bold'> End Date : </span> <span className='text-dark'> {item?.endDate}</span></Col>
                                                                             </Row>
                                                                         </div>
 
@@ -510,26 +356,65 @@ const EmployeeMaster = () => {
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                        {item.downloadDocuments.map((doc, index) => (
-                                                                                            <tr key={index}>
-                                                                                                <td> {doc.files.split('\\').pop()}</td>
-                                                                                                <td className="text-center p-0">
-
-                                                                                                    {doc.fileUrls.map((fileUrl) => (
-                                                                                                        <>
-                                                                                                            <Button className='p-0'
-                                                                                                                variant="link"
-                                                                                                                onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
-                                                                                                            >
-                                                                                                                <i className="fs-20 ri-arrow-down-circle-line"></i>
-                                                                                                            </Button>
-                                                                                                        </>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div className='my-3'>
+                                                                                                    <h5>Product Note</h5>
+                                                                                                    {item.downloadDocuments?.filter(doc => doc.type === "Product Note").map((doc) => (
+                                                                                                        <div key={doc.id}>
+                                                                                                            {doc.fileUrls.map((fileUrl, index) => (
+                                                                                                                <div key={index}>
+                                                                                                                    <Button className='p-0'
+                                                                                                                        variant="link"
+                                                                                                                        onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
+                                                                                                                    >
+                                                                                                                        <i className="ri-download-2-fill me-2"></i>
+                                                                                                                        {getFileName(doc.files)}
+                                                                                                                    </Button>
+                                                                                                                </div>
+                                                                                                            ))}
+                                                                                                        </div>
                                                                                                     ))}
+                                                                                                    <hr />
 
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        ))}
+                                                                                                    <h5>Internal Financial Control IFC</h5>
+                                                                                                    {item.downloadDocuments?.filter(doc => doc.type === "Internal Financial Control IFC").map((doc) => (
+                                                                                                        <div key={doc.id}>
+                                                                                                            {doc.fileUrls.map((fileUrl, index) => (
+                                                                                                                <div key={index}>
+                                                                                                                    <Button className='p-0'
+                                                                                                                        variant="link"
+                                                                                                                        onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
+                                                                                                                    >
+                                                                                                                        <i className="ri-download-2-fill me-2"></i>
+                                                                                                                        {getFileName(doc.files)}
+                                                                                                                    </Button>
+                                                                                                                </div>
+                                                                                                            ))}
+                                                                                                        </div>
+                                                                                                    ))}
+                                                                                                    <hr />
+                                                                                                    <h5>Final Signed Note</h5>
+                                                                                                    {item.downloadDocuments?.filter(doc => doc.type === "Final Signed Note").map((doc) => (
+                                                                                                        <div key={doc.id}>
+                                                                                                            {doc.fileUrls.map((fileUrl, index) => (
+                                                                                                                <div key={index}>
+                                                                                                                    <Button className='p-0'
+                                                                                                                        variant="link"
+                                                                                                                        onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
+                                                                                                                    >
+                                                                                                                        <i className="ri-download-2-fill me-2"></i>
+                                                                                                                        {getFileName(doc.files)}
+                                                                                                                    </Button>
+                                                                                                                </div>
+                                                                                                            ))}
+                                                                                                        </div>
+                                                                                                    ))}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
                                                                                     </tbody>
+
 
 
                                                                                 </Table>
@@ -538,10 +423,10 @@ const EmployeeMaster = () => {
                                                                         <Col className="d-flex justify-content-end">
                                                                             <ButtonGroup>
                                                                                 <Button className='me-1' onClick={handleReject}>Reject</Button>
-                                                                                <Link to={`/pages/DiscussionForum/${item.id}`}>
+                                                                                <Link to={`/pages/DiscussionForum/${item.id}/${item.departmentName}`}>
                                                                                     <Button className='me-1'>Discussion Board</Button>
                                                                                 </Link>
-                                                                                <Button >Approval</Button>
+                                                                                <Button onClick={() => handleSubmit(item.id)}>Sign Off</Button>
                                                                             </ButtonGroup>
                                                                         </Col>
                                                                     </div>
@@ -594,7 +479,7 @@ const EmployeeMaster = () => {
                 </Modal.Footer>
             </Modal>
 
-            <PaginationComponent currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+            {/* <PaginationComponent currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} /> */}
             <ApprovalPopup show={show} setShow={setShow} manageId={manageId} />
         </div>
 

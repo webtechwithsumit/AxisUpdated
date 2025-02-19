@@ -6,7 +6,7 @@ import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Manager {
@@ -17,6 +17,7 @@ interface Manager {
     unresolvedQueries: string;
     productName: string;
     startDate: string;
+    productID: string;
 }
 
 
@@ -51,7 +52,7 @@ const DiscussionList = () => {
         { id: 'departmentCode', label: 'Department Code  ', visible: true },
         { id: 'departmentName', label: 'Department Name ', visible: true },
         { id: 'departmentStatus', label: 'Department Status ', visible: true },
-        { id: 'SignedoffDAte', label: 'Signed off DAte ', visible: true },
+        { id: 'SignedoffDAte', label: 'Signed off Date ', visible: true },
         { id: 'unresolvedQueries', label: 'Unresolved Queries ', visible: true },
 
 
@@ -79,12 +80,13 @@ const DiscussionList = () => {
     const fetchEmployee = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/DiscussionForm/GetDiscussionFormList`, {
+            const response = await axiosInstance.get(`${config.API_URL}/DiscussionForm/GetDiscussionFormList`, {
                 params: { PageIndex: currentPage, ProductID: id }
             });
 
             if (response.data.isSuccess) {
                 const fetchedData = response.data.list;
+                console.log(fetchedData)
                 if (fetchedData.length > 0 && fetchedData[0].getProducts.length > 0) {
                     setHeaderName(fetchedData[0].getProducts[0]);
                 }
@@ -145,7 +147,7 @@ const DiscussionList = () => {
         const popover = (
             <Popover id={`popover-action-${item.id}`} className="shadow">
                 <Popover.Body className="p-2">
-                    <Button variant="link" as={Link as any} to={`/pages/discussionForum/${item.id}`} className="d-block text-start">
+                    <Button variant="link" as={Link as any} to={`/pages/discussionForum/${headerName?.productID}/${item.departmentName}`} className="d-block text-start">
                         <i className="ri-file-list-line me-2"></i> Discussion Board
                     </Button>
                 </Popover.Body>

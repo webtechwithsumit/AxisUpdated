@@ -1,9 +1,9 @@
 import { Form, Button, Modal, Row, Col, ButtonGroup, Container, Alert } from "react-bootstrap";
-import axios from "axios";
 import config from "@/config";
 import { useEffect, useState } from "react";
 import Select from 'react-select';
 import { toast } from "react-toastify";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface ProcessCanvasProps {
     show: boolean;
@@ -100,7 +100,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {
@@ -119,7 +119,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
     const fetchProcessByid = async (id: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/ProcessMaster/GetProcess`, {
+            const response = await axiosInstance.get(`${config.API_URL}/ProcessMaster/GetProcess`, {
                 params: { id: id }
             });
             if (response.data.isSuccess) {
@@ -138,7 +138,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
 
     const fetchModuleById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/ProcessMaster/GetProcess`, {
+            const response = await axiosInstance.get(`${config.API_URL}/ProcessMaster/GetProcess`, {
                 params: { id: id }
             });
             if (response.data.isSuccess) {
@@ -161,7 +161,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
 
     const fetchGetProject = async (moduleName: string, processId: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/AssignProjecttoProcess/GetProjectAssignListbyIDs`, {
+            const response = await axiosInstance.get(`${config.API_URL}/AssignProjecttoProcess/GetProjectAssignListbyIDs`, {
                 params: { ModuleName: moduleName, ProcessId: processId }
             });
             if (response.data.isSuccess) {
@@ -207,7 +207,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
 
         try {
             const apiUrl = `${config.API_URL}/AssignProjecttoProcess/AssignProjecttoProcess`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
 
             if (response.data.isSuccess) {
                 toast.dismiss();
@@ -215,7 +215,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
 
                 try {
                     const fetchUrl = `${config.API_URL}/AssignProjecttoProcess/GetProjectAssignListbyIDs`;
-                    const fetchResponse = await axios.get(fetchUrl, {
+                    const fetchResponse = await axiosInstance.get(fetchUrl, {
                         params: { ModuleName: moduleName, ProcessId: processId },
                     });
 
@@ -231,7 +231,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
                         };
 
                         try {
-                            await axios.post(
+                            await axiosInstance.post(
                                 `${config.API_URL}/ProcessMaster/UpdateProcess`,
                                 updatedPayloadUpdate
                             );
@@ -260,7 +260,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
     const handleDelete = async (id: any) => {
         try {
             const apiUrl = `${config.API_URL}/AssignProjecttoProcess/DeleteProjectAssigntoProcess`;
-            const deleteResponse = await axios.delete(apiUrl, {
+            const deleteResponse = await axiosInstance.delete(apiUrl, {
                 params: { id, ModuleName: moduleName, ProcessID: processId },
             });
 
@@ -269,7 +269,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
                 toast.warn("Project deleted successfully!");
                 try {
                     const fetchUrl = `${config.API_URL}/AssignProjecttoProcess/GetProjectAssignListbyIDs`;
-                    const fetchResponse = await axios.get(fetchUrl, {
+                    const fetchResponse = await axiosInstance.get(fetchUrl, {
                         params: { ModuleName: moduleName, ProcessId: processId },
                     });
 
@@ -285,7 +285,7 @@ const ApprovalPopup: React.FC<ProcessCanvasProps> = ({ show, setShow, manageId }
                         };
 
                         try {
-                            await axios.post(
+                            await axiosInstance.post(
                                 `${config.API_URL}/ProcessMaster/UpdateProcess`,
                                 updatedPayload
                             );

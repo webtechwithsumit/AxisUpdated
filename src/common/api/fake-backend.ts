@@ -20,7 +20,7 @@ const mock = new MockAdapter(axios, { onNoMatch: 'passthrough' })
 const users: User[] = [
 	{
 		id: 1,
-		email: 'velonic@techzaa.com',
+		email: '',
 		username: 'Velonic',
 		password: 'Velonic',
 		firstName: 'Velonic',

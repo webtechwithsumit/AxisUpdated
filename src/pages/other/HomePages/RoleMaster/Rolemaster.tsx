@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
 import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 
 interface Manager {
@@ -80,6 +81,7 @@ const RoleMaster = () => {
 
 
 
+
     const [searchEmployee, setSearchEmployee] = useState('');
     const [searchProject, setSearchProject] = useState('');
     const [searchAppAccessLevel, setSearchAppAccessLevel] = useState('');
@@ -126,7 +128,7 @@ const RoleMaster = () => {
 
             setLoading(true);
 
-            const { data } = await axios.get(apiUrl, { headers: { accept: '*/*' } });
+            const { data } = await axiosInstance.get(apiUrl, { headers: { accept: '*/*' } });
 
             if (data.isSuccess) {  // Ensure successful response
                 setEmployee(data.employeeMasterList);
@@ -160,7 +162,7 @@ const RoleMaster = () => {
     const fetchEmployee = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/RoleMaster/GetRole`, {
+            const response = await axiosInstance.get(`${config.API_URL}/RoleMaster/GetRole`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {

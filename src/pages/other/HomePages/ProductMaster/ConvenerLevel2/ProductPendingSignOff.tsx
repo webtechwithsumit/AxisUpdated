@@ -5,8 +5,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
+import axiosInstance from '@/utils/axiosInstance';
+import DateFormatter from '@/pages/other/Component/DateComponent';
 
 interface Product {
     id: number;
@@ -20,6 +21,7 @@ interface Product {
     isApproved: number;
     fileUpload: string;
     createdBy: string;
+    createdDate: string;
     updatedBy: string;
 }
 
@@ -55,7 +57,7 @@ const NewProductPendingCirculation = () => {
         { id: 'productType', label: 'Product Type', visible: true },
         { id: 'originator', label: 'Originator', visible: true },
         { id: 'mobileNumber', label: 'Mobile Number', visible: true },
-        { id: 'startDate', label: 'Start Date', visible: true },
+        { id: 'createdDate', label: 'Start Date', visible: true },
         { id: 'dayslappesd', label: 'Day Laps', visible: true },
         { id: 'uploadedOn', label: 'SignOff By Department', visible: true },
     ]);
@@ -76,7 +78,7 @@ const NewProductPendingCirculation = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductCirculatedListForSignOff`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductCirculatedListForSignOff`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {
@@ -116,7 +118,7 @@ const NewProductPendingCirculation = () => {
         );
     };
 
-
+    console.log(project)
 
     return (
         <>
@@ -212,7 +214,13 @@ const NewProductPendingCirculation = () => {
                                                                             <td>{(currentPage - 1) * 10 + index + 1}</td>
                                                                             {columns.filter(col => col.visible).map((col) => (
                                                                                 <td key={col.id}>
-                                                                                    <div>{item[col.id as keyof Product]}</div>
+
+
+
+                                                                                    {col.id === 'createdDate' ? (
+                                                                                        <DateFormatter dateString={item.createdDate} />
+                                                                                    ) : (item[col.id as keyof Product] as string | number)
+                                                                                    }
                                                                                 </td>
                                                                             ))}
                                                                             <td className='text-center'>

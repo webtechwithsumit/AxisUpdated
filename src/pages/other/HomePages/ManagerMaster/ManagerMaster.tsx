@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface Manager {
     id: number;
@@ -127,7 +127,7 @@ const EmployeeMaster = () => {
 
             setLoading(true);
 
-            const { data } = await axios.get(apiUrl, { headers: { accept: '*/*' } });
+            const { data } = await axiosInstance.get(apiUrl, { headers: { accept: '*/*' } });
 
             if (data.isSuccess) {  // Ensure successful response
                 setEmployee(data.employeeMasterList);
@@ -161,7 +161,7 @@ const EmployeeMaster = () => {
     const fetchEmployee = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Manager/GetManager`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Manager/GetManager`, {
                 params: { PageIndex: currentPage }
             });
             if (response.data.isSuccess) {
@@ -182,7 +182,7 @@ const EmployeeMaster = () => {
     useEffect(() => {
         const fetchData = async (endpoint: string, setter: Function, listName: string) => {
             try {
-                const response = await axios.get(`${config.API_URL}/${endpoint}`);
+                const response = await axiosInstance.get(`${config.API_URL}/${endpoint}`);
                 if (response.data.isSuccess) {
                     setter(response.data[listName]);
                 } else {

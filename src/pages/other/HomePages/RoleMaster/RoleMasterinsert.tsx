@@ -3,7 +3,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import config from '@/config';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 
 interface Manager {
     id: number;
@@ -50,7 +50,7 @@ const RoleMasterinsert = () => {
 
     const fetchManagerById = async (id: string) => {
         try {
-            const response = await axios.get(`${config.API_URL}/Manager/GetManagerList?Flag=2`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Manager/GetManagerList?Flag=2`, {
                 params: { id }
             });
             if (response.data.isSuccess) {
@@ -99,7 +99,7 @@ const RoleMasterinsert = () => {
 
         try {
             const apiUrl = `${config.API_URL}/Manager/InsertUpdateManager`;
-            const response = await axios.post(apiUrl, payload);
+            const response = await axiosInstance.post(apiUrl, payload);
             if (response.status === 200) {
                 navigate('/pages/managerMaster', {
                     state: {
@@ -171,6 +171,7 @@ const RoleMasterinsert = () => {
                                     {validationErrors.status && <small className="text-danger">{validationErrors.status}</small>}
                                 </Form.Group>
                             </Col>
+
 
                             <Col className='align-items-end d-flex justify-content-end mb-3'>
                                 <div>

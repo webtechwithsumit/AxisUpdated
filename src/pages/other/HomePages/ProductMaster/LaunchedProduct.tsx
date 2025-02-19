@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import config from '@/config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosInstance from '@/utils/axiosInstance';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
 import { useAuthContext } from '@/common';
 
@@ -82,7 +82,7 @@ const SignOffProduct = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${config.API_URL}/Product/GetProductListOfFinalSignOff`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListOfFinalSignOff`, {
                 params: { PageIndex: currentPage, RoleName: user?.roles, DepartmentName: user?.departmentName },
             });
             if (response.data.isSuccess) {
@@ -103,8 +103,8 @@ const SignOffProduct = () => {
         const popover = (
             <Popover id={`popover-action-${item.id}`} className="shadow">
                 <Popover.Body className="p-2">
-                    <Button variant="link" as={Link as any} to={`/pages/ProductMaster/${item.id}`} className="d-block text-start">
-                        <i className="ri-file-list-line me-2"></i> View
+                    <Button variant="link" as={Link as any} to={`/pages/FinalViewProduct/${item.id}`} className="d-block text-start">
+                        <i className="ri-file-list-line me-2"></i> View Product
                     </Button>
 
                     <Button variant="link" as={Link as any} to={`/pages/ProductMaster/${item.id}`} className="d-block text-start text-green">
