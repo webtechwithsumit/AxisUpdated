@@ -110,7 +110,9 @@ const NewProductPendingCirculation = () => {
                     <Button variant="link" onClick={() => handleSubmit(item.id)} className="d-block text-start text-success" disabled={item.isApproved === 2}>
                         <i className="ri-checkbox-circle-line me-2"></i>{item.isApproved === 2 ? 'Approved' : 'Approve'}
                     </Button>
-                    <Button variant="link" as={Link as any} to={`/pages/AssigneeDepartment/${item.id}`} className="d-block text-start text-primary">
+                    <Button variant="link" as={Link as any} to={`/pages/AssigneeDepartment/${item.id}`}
+                        className={`d-block text-start text-primary ${item.isApproved !== 2 ? 'disabled' : ''}`}
+                        disabled={item.isApproved !== 2}>
                         <i className="ri-share-forward-line me-2"></i> Circulate
                     </Button>
                 </Popover.Body>
