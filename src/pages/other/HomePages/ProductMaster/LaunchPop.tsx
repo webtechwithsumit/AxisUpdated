@@ -7,14 +7,13 @@ import { useAuthContext } from "@/common";
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
 
-
-
 interface ProductDetails {
     id: number;
     productName: string;
     departmentName: string;
     launchRequestDate: string;
     launchDescription: string;
+    launchDate: string;
     isLaunched: number;
 }
 
@@ -31,9 +30,12 @@ const LaunchPop: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) =>
         productName: '',
         departmentName: '',
         launchRequestDate: '',
+        launchDate: '',
         launchDescription: '',
         isLaunched: 0,
     });
+
+    const [file, setFile] = useState<File | null>(null);
 
     useEffect(() => {
         if (show && dataItem) {
@@ -45,36 +47,84 @@ const LaunchPop: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) =>
         setShow(false);
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        toast.dismiss();
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setFile(e.target.files[0]);
+        } else {
+            setFile(null);
+        }
+    };
 
-        if (!user) {
-            toast.error("User information is not available.");
-            return;
+    const uploadFile = async () => {
+        if (!file) {
+            toast.error("Please upload a file before submitting.");
+            return null;
         }
 
+        const formData = new FormData();
+        formData.append("ProductID", projects.id.toString());
+        formData.append("ProductType", "Launch Document");
+        formData.append("ProductName", projects.productName);
+        formData.append("Files", file);
+        formData.append("CreatedBy", `${user?.employeeName ?? "Unknown Employee"} - ${user?.userName ?? "Unknown User"}`);
+        formData.append("UpdatedBy", `${user?.employeeName ?? "Unknown Employee"} - ${user?.userName ?? "Unknown User"}`);
+
+        try {
+            const uploadUrl = `${config.API_URL}/UploadDocument/UploadFileforLaunch`;
+            const response = await axiosInstance.post(uploadUrl, formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+
+            if (response.status === 200) {
+                toast.success("File uploaded successfully.");
+                return response.data; // Returning API response for next step
+            } else {
+                toast.error(response.data.message || "File upload failed.");
+                return null;
+            }
+        } catch (error: any) {
+            toast.error(error.message || "Error uploading file.");
+            console.error("File upload error:", error);
+            return null;
+        }
+    };
+
+    const updateLaunchDate = async () => {
         const payload = {
-            productID: projects.id,
-            launchRequestDate: projects.launchRequestDate,
-            launchDescription: projects.launchDescription,
+            productID: projects?.id ?? null,
+            launchRequestDate: new Date().toLocaleDateString('en-CA'),
+            launchDate: projects?.launchDate ?? null,
+            launchDescription: projects?.launchDescription ?? "",
             updatedBy: `${user?.employeeName ?? "Unknown Employee"} - ${user?.userName ?? "Unknown User"}`,
         };
-
-        console.log("Payload:", payload);
 
         try {
             const apiUrl = `${config.API_URL}/Product/UpdateLaunchDate`;
             const response = await axiosInstance.post(apiUrl, payload);
+
             if (response.status === 200) {
-                toast.success(response.data.message || 'Product Launched Successfully');
+                toast.success(response.data.message || "Product Launched Successfully");
                 setShow(false);
             } else {
-                toast.error(response.data.message || 'Failed to process request');
+                toast.error(response.data.message || "Failed to process request");
             }
         } catch (error: any) {
-            toast.error(error.message || 'Error in Launching Product');
-            console.error('Error submitting:', error);
+            toast.error(error.message || "Error in Launching Product");
+            console.error("Launch update error:", error);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        toast.dismiss();
+
+        if (file) {
+            const uploadResponse = await uploadFile();
+            if (uploadResponse) {
+                await updateLaunchDate();
+            }
+        } else {
+            await updateLaunchDate();
         }
     };
 
@@ -97,17 +147,16 @@ const LaunchPop: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) =>
                             </Col>
                         </Row>
 
-
                         <Form.Group className="mb-3">
-                            <Form.Label> Launch Request Date  </Form.Label>
+                            <Form.Label>Go Live Date</Form.Label>
                             <Flatpickr
-                                value={projects.launchRequestDate || ''}
+                                value={projects.launchDate || ''}
                                 onChange={([date]) => {
                                     if (date) {
                                         const formattedDate = date.toLocaleDateString('en-CA');
                                         setProjects({
                                             ...projects,
-                                            launchRequestDate: formattedDate,
+                                            launchDate: formattedDate,
                                         });
                                     }
                                 }}
@@ -116,14 +165,13 @@ const LaunchPop: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) =>
                                     dateFormat: "Y-m-d",
                                     time_24hr: false,
                                 }}
-                                placeholder="Start Date "
+                                placeholder="Start Date"
                                 className={" form-control "}
                             />
-
                         </Form.Group>
 
                         <Form.Group className="mb-3">
-                            <Form.Label> Description</Form.Label>
+                            <Form.Label>Description</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
@@ -132,6 +180,16 @@ const LaunchPop: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) =>
                                 required
                             />
                         </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Upload File</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept=".pdf,.doc,.docx,.xlsx,.txt"
+                                onChange={handleFileChange}
+                            />
+                        </Form.Group>
+
                         <Col className="d-flex justify-content-end">
                             <Button variant="primary" type="submit">
                                 Submit

@@ -9,6 +9,14 @@ import axiosInstance from '@/utils/axiosInstance';
 import PaginationComponent from '@/pages/other/Component/PaginationComponent';
 import { useAuthContext } from '@/common';
 
+// Interface for Document Data
+interface DocumentData {
+    files: string;
+    fileUrls: string[];
+    createdDate?: string;
+}
+
+// Interface for Product Data
 interface Product {
     id: number;
     productType: string;
@@ -22,8 +30,8 @@ interface Product {
     fileUpload: string;
     createdBy: string;
     updatedBy: string;
+    downloadDocumentsForLaunch?: DocumentData[];
 }
-
 
 interface Column {
     id: string;
@@ -56,12 +64,12 @@ const SignOffProduct = () => {
         { id: 'productType', label: 'Product Type', visible: true },
         { id: 'departmentName', label: 'Department', visible: true },
         { id: 'originator', label: 'Originator', visible: true },
-        { id: 'departmentName', label: 'Sign off by Department', visible: true },
+        { id: 'signOffDepartment', label: 'Sign off by Department', visible: true }, // Changed ID
         { id: 'ref_Number', label: 'Refrence Number', visible: true },
         { id: 'launchRequestDate', label: 'Requested Launch date', visible: true },
         { id: 'launchDate', label: 'Launched Date', visible: true },
-
     ]);
+
 
     const handleOnDragEnd = (result: any) => {
         if (!result.destination) return;
@@ -82,7 +90,7 @@ const SignOffProduct = () => {
     const fetchDetailsMain = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListOfFinalSignOff`, {
+            const response = await axiosInstance.get(`${config.API_URL}/Product/GetProductListForLaunch`, {
                 params: { PageIndex: currentPage, RoleName: user?.roles, DepartmentName: user?.departmentName },
             });
             if (response.data.isSuccess) {
@@ -96,6 +104,29 @@ const SignOffProduct = () => {
         }
         finally {
             setLoading(false);
+        }
+    };
+
+    const downloadFiles = async (file: string, name: any) => {
+        console.log(file)
+        console.log(name)
+        try {
+            const response = await axiosInstance({
+                method: 'GET',
+                url: `${config.API_URL}/UploadDocument/DownloadFile`,
+                params: { filename: file },
+                responseType: 'blob',
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', name);
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading the file:', error);
         }
     };
 
@@ -127,6 +158,11 @@ const SignOffProduct = () => {
             </OverlayTrigger>
         );
     };
+
+    const getFileName = (filePath: string) => {
+        return filePath.split(/(\\|\/)/g).pop();
+    };
+
 
     return (
         <>
@@ -208,44 +244,73 @@ const SignOffProduct = () => {
                                                                             )}
                                                                         </Draggable>
                                                                     ))}
+                                                                    <th className='text-center'><i className="ri-eye-line"></i> View</th>
                                                                     <th className='text-center'><i className="ri-pencil-line"></i> Action</th>
                                                                 </tr>
                                                             )}
                                                         </Droppable>
                                                     </thead>
                                                     <tbody>
-                                                        {project.length > 0 ? (
-                                                            project.slice(0, 10).map((item, index) => (
-                                                                <tr key={item.id}>
-                                                                    <td>{(currentPage - 1) * 10 + index + 1}</td>
-                                                                    {columns.filter(col => col.visible).map((col) => (
-                                                                        <td key={col.id}>
-                                                                            <div>{item[col.id as keyof Product]}</div>
-                                                                        </td>
-                                                                    ))}
-                                                                    <td className='text-center'>
+                                                        {project.map((item, index) => (
+                                                            <tr key={item.id}>
+                                                                <td>{(currentPage - 1) * 10 + index + 1}</td>
 
-                                                                        <ActionMenu item={item} />
+                                                                {columns.filter(col => col.visible).map((col) => (
+                                                                    <td key={col.id}>
+                                                                        <div>{item[col.id as keyof Product] as React.ReactNode}</div>
                                                                     </td>
-                                                                </tr>
-                                                            ))
-                                                        ) : (
-                                                            <tr>
-                                                                <td colSpan={12}>
-                                                                    <Container className="mt-5">
-                                                                        <Row className="justify-content-center">
-                                                                            <Col xs={12} md={8} lg={6}>
-                                                                                <Alert variant="info" className="text-center">
-                                                                                    <h4>No Data  Found</h4>
-                                                                                    <p>You currently don't have any Data</p>
-                                                                                </Alert>
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </Container>
+                                                                ))}
+
+
+
+                                                                {/* Documents Column - Fixed Mapping Issue */}
+                                                                <td className="text-center">
+                                                                    {item.downloadDocumentsForLaunch && item.downloadDocumentsForLaunch.length > 0 ? (
+                                                                        <OverlayTrigger
+                                                                            trigger="click"
+                                                                            rootClose
+                                                                            placement="left"
+                                                                            overlay={
+                                                                                <Popover id={`popover-docs-${item.id}`}>
+                                                                                    <Popover.Body>
+                                                                                        {item.downloadDocumentsForLaunch.map((doc, idx) => {
+                                                                                            // Ensure fileUrl is valid
+                                                                                            const fileUrl = Array.isArray(doc.fileUrls) && doc.fileUrls.length > 0 ? doc.fileUrls[0] : null;
+
+                                                                                            return (
+                                                                                                <div key={idx} className="d-flex justify-content-between">
+                                                                                                    <Button
+                                                                                                        className="p-0"
+                                                                                                        variant="link"
+                                                                                                        onClick={() => fileUrl && downloadFiles(fileUrl, getFileName(doc.files))}
+                                                                                                    >
+                                                                                                        <i className="ri-download-2-fill me-2"></i>
+                                                                                                        {getFileName(doc.files)}
+                                                                                                    </Button>
+                                                                                                    {doc.createdDate ? <span>{doc.createdDate}</span> : <span>-</span>}
+                                                                                                </div>
+                                                                                            );
+                                                                                        })}
+                                                                                    </Popover.Body>
+                                                                                </Popover>
+                                                                            }
+                                                                        >
+                                                                            <Button variant="link" className="text-primary">
+                                                                                <i className="ri-eye-line fs-5"></i> {/* Eye Icon */}
+                                                                            </Button>
+                                                                        </OverlayTrigger>
+                                                                    ) : (
+                                                                        <span className="text-muted">No Documents</span>
+                                                                    )}
+                                                                </td>
+
+                                                                <td className="text-center">
+                                                                    <ActionMenu item={item} />
                                                                 </td>
                                                             </tr>
-                                                        )}
+                                                        ))}
                                                     </tbody>
+
                                                 </Table>
                                             </DragDropContext>
                                         )}

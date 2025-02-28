@@ -21,6 +21,7 @@ interface Product {
     mobileNumber: string;
     fileUpload: string;
     createdBy: string;
+    isLaunched: number;
     updatedBy: string;
 }
 
@@ -119,8 +120,8 @@ const SignOffProduct = () => {
                     <Button variant="link" as={Link as any} to={`/pages/discussionList/${item.id}`} className="d-block text-start text-danger">
                         <i className="ri-discuss-line me-2"></i> Discussion Board
                     </Button>
-                    <Button variant="link" className="d-block text-start text-danger" onClick={() => handleEdit(item)}>
-                        <i className="ri-discuss-line me-2"></i> Request For Go Live
+                    <Button variant="link" className="d-block text-start text-danger" onClick={() => handleEdit(item)} disabled={item.isLaunched === 1}>
+                        <i className="ri-discuss-line me-2"></i>  {item.isLaunched === 1 ? " Launched" : "Request For Go Live"}
                     </Button>
                 </Popover.Body>
             </Popover>

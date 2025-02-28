@@ -15,6 +15,7 @@ interface ProductDetails {
     departmentName: string;
     launchRequestDate: string;
     launchDescription: string;
+    downloadDocumentsForLaunch: string;
     launchDate: string;
     isLaunched: number;
 }
@@ -33,6 +34,7 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
         departmentName: '',
         launchRequestDate: '',
         launchDescription: '',
+        downloadDocumentsForLaunch: '',
         launchDate: '',
         isLaunched: 0,
     });
@@ -80,6 +82,33 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
         }
     };
 
+    const downloadFiles = async (file: string, name: any) => {
+        console.log(file)
+        console.log(name)
+        try {
+            const response = await axiosInstance({
+                method: 'GET',
+                url: `${config.API_URL}/UploadDocument/DownloadFile`,
+                params: { filename: file },
+                responseType: 'blob',
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', name);
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading the file:', error);
+        }
+    };
+    const getFileName = (filePath: string) => {
+        return filePath.split(/(\\|\/)/g).pop();
+    };
+
+
     return (
         <div>
             <Modal className="p-2" show={show} onHide={handleClose} size="lg">
@@ -103,31 +132,6 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
                         <Form.Group className="mb-3">
                             <Form.Label> Requested Launch Date  </Form.Label>
                             <Flatpickr
-                                value={projects.launchRequestDate || ''}
-                                onChange={([date]) => {
-                                    if (date) {
-                                        const formattedDate = date.toLocaleDateString('en-CA');
-                                        setProjects({
-                                            ...projects,
-                                            launchRequestDate: formattedDate,
-                                        });
-                                    }
-                                }}
-                                options={{
-                                    enableTime: false,
-                                    dateFormat: "Y-m-d",
-                                    time_24hr: false,
-                                }}
-                                placeholder="Requested Launch Date "
-                                className={" form-control "}
-                                disabled
-                            
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                            <Form.Label> Launch  Date  </Form.Label>
-                            <Flatpickr
                                 value={projects.launchDate || ''}
                                 onChange={([date]) => {
                                     if (date) {
@@ -143,11 +147,42 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
                                     dateFormat: "Y-m-d",
                                     time_24hr: false,
                                 }}
-                                placeholder="launch Date "
+                                placeholder="Requested Launch Date "
                                 className={" form-control "}
-                            />
+                                disabled
 
+                            />
                         </Form.Group>
+
+
+                        {Array.isArray(projects.downloadDocumentsForLaunch) && projects.downloadDocumentsForLaunch.length > 0 && (
+                            <Form.Group className="mb-3">
+                                <Form.Label>Download Documents</Form.Label>
+                                <ul className="list-group">
+                                    {projects.downloadDocumentsForLaunch.map((doc: any, index: number) => {
+                                        const fileUrl = Array.isArray(doc.fileUrls) && doc.fileUrls.length > 0 ? doc.fileUrls[0] : null;
+
+                                        return (
+                                            <div key={index} className='d-flex justify-content-between'>
+                                                {fileUrl ? (
+                                                    <Button className='p-0'
+                                                        variant="link"
+                                                        onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
+                                                    >
+                                                        <i className="ri-download-2-fill me-2"></i>
+                                                        {getFileName(doc.files)}
+                                                    </Button>
+                                                ) : (
+                                                    <span className="text-muted">No file available</span>
+                                                )}
+                                                {doc.createdDate ? <span>{doc.createdDate}</span> : <span>-</span>}
+                                            </div>
+                                        );
+                                    })}
+                                </ul>
+                            </Form.Group>
+                        )}
+
 
                         <Form.Group className="mb-3">
                             <Form.Label> Description</Form.Label>
@@ -160,8 +195,11 @@ const GoLivepopup: React.FC<ProcessCanvasProps> = ({ show, setShow, dataItem }) 
                             />
                         </Form.Group>
                         <Col className="d-flex justify-content-end">
+                            <Button variant="primary" className="me-2" >
+                                Reject
+                            </Button>
                             <Button variant="primary" type="submit">
-                                Submit
+                                Approve
                             </Button>
                         </Col>
                     </Form>

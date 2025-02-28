@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PaginationComponent from '../../Component/PaginationComponent';
 import axiosInstance from '@/utils/axiosInstance';
+import DateFormatter from '../../Component/DateComponent';
 
 
 interface Manager {
@@ -17,6 +18,7 @@ interface Manager {
     unresolvedQueries: string;
     productName: string;
     startDate: string;
+    discussionStartDate: string;
     productID: string;
 }
 
@@ -49,10 +51,11 @@ const DiscussionList = () => {
 
     // both are required to make dragable column of table 
     const [columns, setColumns] = useState<Column[]>([
-        { id: 'departmentCode', label: 'Department Code  ', visible: true },
+        // { id: 'departmentCode', label: 'Department Code  ', visible: true },
         { id: 'departmentName', label: 'Department Name ', visible: true },
         { id: 'departmentStatus', label: 'Department Status ', visible: true },
         { id: 'SignedoffDAte', label: 'Signed off Date ', visible: true },
+        { id: 'discussionStartDate', label: 'Discussion start Date ', visible: true },
         { id: 'unresolvedQueries', label: 'Unresolved Queries ', visible: true },
 
 
@@ -74,7 +77,7 @@ const DiscussionList = () => {
 
     }, [currentPage]);
 
-    console.log(headerName)
+
 
 
     const fetchEmployee = async () => {
@@ -90,40 +93,37 @@ const DiscussionList = () => {
                 if (fetchedData.length > 0 && fetchedData[0].getProducts.length > 0) {
                     setHeaderName(fetchedData[0].getProducts[0]);
                 }
-                let departmentMap = new Map(); // Track unique departments
+                let departmentMap = new Map();
 
                 fetchedData.forEach((item: any) => {
                     const listDepartmentName = item.departmentName;
-                    const status = item.status; // Extract status from the list
+                    const status = item.status;
 
                     item.getProducts.forEach((product: any) => {
                         product.departmentList.forEach((department: any) => {
-                            const departmentKey = department.departmentID; // Unique key for departments
+                            const departmentKey = department.departmentID;
 
                             let departmentStatus = department.departmentName === listDepartmentName
                                 ? (status === 1 ? "Signed Off" : "Not Signed Off")
-                                : "Not Signed Off"; // Default to "Not Signed Off"
+                                : "Not Signed Off";
 
-                            let signOffDate = departmentStatus === "Signed Off" ? department.startDate : "-"; // Show date only if Signed Off
+                            let signOffDate = departmentStatus === "Signed Off" ? department.startDate : "-";
 
-                            // Ensure only one record per department, prioritize "Signed Off"
                             if (!departmentMap.has(departmentKey)) {
                                 departmentMap.set(departmentKey, {
                                     id: department.departmentID,
-                                    // departmentCode: department.departmentID,
                                     departmentName: department.departmentName,
                                     SignedoffDAte: signOffDate,
                                     departmentStatus: departmentStatus,
                                     unresolvedQueries: "0",
                                 });
                             } else {
-                                // Prioritize "Signed Off" over "Not Signed Off" and update date accordingly
                                 let existingRecord = departmentMap.get(departmentKey);
                                 if (existingRecord.departmentStatus === "Not Signed Off" && departmentStatus === "Signed Off") {
                                     departmentMap.set(departmentKey, {
                                         ...existingRecord,
                                         departmentStatus: "Signed Off",
-                                        SignedoffDAte: signOffDate, // Keep signed off date only for signed off
+                                        SignedoffDAte: signOffDate,
                                     });
                                 }
                             }
@@ -131,7 +131,22 @@ const DiscussionList = () => {
                     });
                 });
 
-                setDiscussionlist(Array.from(departmentMap.values())); // Convert Map back to array
+                for (let department of departmentMap.values()) {
+                    try {
+                        const queryResponse = await axiosInstance.get(`${config.API_URL}/DiscussionForm/GetCountofUnresolvedQueryDepartmentWise`, {
+                            params: { ProductID: id, Department: department.departmentName }
+                        });
+
+                        if (queryResponse.data.isSuccess) {
+                            department.unresolvedQueries = queryResponse.data.queryCount;
+                            department.discussionStartDate = queryResponse.data.createdDate;
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching query count for ${department.departmentName}:`, error);
+                    }
+                }
+
+                setDiscussionlist(Array.from(departmentMap.values()));
                 setTotalPages(Math.ceil(response.data.totalCount / 10));
             } else {
                 console.error(response.data.message);
@@ -142,6 +157,12 @@ const DiscussionList = () => {
             setLoading(false);
         }
     };
+
+
+
+
+    console.log(discussionlist)
+
 
     const ActionMenu: React.FC<{ item: Manager }> = ({ item }) => {
         const popover = (
@@ -254,7 +275,15 @@ const DiscussionList = () => {
                                                                         ''
                                                             }
                                                         >
-                                                            <div>{item[col.id as keyof Manager]}</div>
+
+
+                                                            {/* <div>{item[col.id as keyof Manager]}</div> */}
+                                                            {col.id === 'discussionStartDate' ? (
+                                                                <DateFormatter dateString={item.discussionStartDate} />
+                                                            ) : (item[col.id as keyof Manager] as string | number)
+                                                            }
+
+
                                                         </td>
                                                     ))}
                                                     <td className='text-center'>

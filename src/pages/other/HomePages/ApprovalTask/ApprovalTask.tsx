@@ -35,9 +35,12 @@ interface DocumentProduct {
 }
 
 
-interface DocumentItem {
+interface DocumentProduct {
+    id: number;
+    type: string;
     files: string;
     fileUrls: string[];
+    createdDate?: string; // <-- Add this property
 }
 
 interface ProductChecklist {
@@ -278,7 +281,7 @@ const EmployeeMaster = () => {
                                                         {columns.filter(col => col.visible).map((col) => (
                                                             <td key={col.id}>
                                                                 {Array.isArray(item[col.id as keyof Manager])
-                                                                    ? (item[col.id as keyof Manager] as DocumentItem[]).map((doc, index) => (
+                                                                    ? (item[col.id as keyof Manager] as DocumentProduct[]).map((doc, index) => (
                                                                         <span key={index}>
                                                                             {doc.files.split('\\').pop()}
                                                                             <br />
@@ -351,8 +354,11 @@ const EmployeeMaster = () => {
                                                                                 <Table hover className="bg-white custom-table">
                                                                                     <thead>
                                                                                         <tr>
-                                                                                            <th>File Name</th>
-                                                                                            <th className='text-center'>Download</th>
+                                                                                            <th className='d-flex justify-content-between'>
+                                                                                                <span>File Name</span>
+                                                                                                <span>Date</span>
+                                                                                            </th>
+
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -363,7 +369,7 @@ const EmployeeMaster = () => {
                                                                                                     {item.downloadDocuments?.filter(doc => doc.type === "Product Note").map((doc) => (
                                                                                                         <div key={doc.id}>
                                                                                                             {doc.fileUrls.map((fileUrl, index) => (
-                                                                                                                <div key={index}>
+                                                                                                                <div key={index} className='d-flex justify-content-between'>
                                                                                                                     <Button className='p-0'
                                                                                                                         variant="link"
                                                                                                                         onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -371,6 +377,7 @@ const EmployeeMaster = () => {
                                                                                                                         <i className="ri-download-2-fill me-2"></i>
                                                                                                                         {getFileName(doc.files)}
                                                                                                                     </Button>
+                                                                                                                    {doc.createdDate ? <span>{doc.createdDate}</span> : <span>-</span>}
                                                                                                                 </div>
                                                                                                             ))}
                                                                                                         </div>
@@ -381,7 +388,7 @@ const EmployeeMaster = () => {
                                                                                                     {item.downloadDocuments?.filter(doc => doc.type === "Internal Financial Control IFC").map((doc) => (
                                                                                                         <div key={doc.id}>
                                                                                                             {doc.fileUrls.map((fileUrl, index) => (
-                                                                                                                <div key={index}>
+                                                                                                                <div key={index} className='d-flex justify-content-between'>
                                                                                                                     <Button className='p-0'
                                                                                                                         variant="link"
                                                                                                                         onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -389,6 +396,7 @@ const EmployeeMaster = () => {
                                                                                                                         <i className="ri-download-2-fill me-2"></i>
                                                                                                                         {getFileName(doc.files)}
                                                                                                                     </Button>
+                                                                                                                    {doc.createdDate ? <span>{doc.createdDate}</span> : <span>-</span>}
                                                                                                                 </div>
                                                                                                             ))}
                                                                                                         </div>
@@ -398,7 +406,7 @@ const EmployeeMaster = () => {
                                                                                                     {item.downloadDocuments?.filter(doc => doc.type === "Final Signed Note").map((doc) => (
                                                                                                         <div key={doc.id}>
                                                                                                             {doc.fileUrls.map((fileUrl, index) => (
-                                                                                                                <div key={index}>
+                                                                                                                <div key={index} className='d-flex justify-content-between'>
                                                                                                                     <Button className='p-0'
                                                                                                                         variant="link"
                                                                                                                         onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -406,6 +414,7 @@ const EmployeeMaster = () => {
                                                                                                                         <i className="ri-download-2-fill me-2"></i>
                                                                                                                         {getFileName(doc.files)}
                                                                                                                     </Button>
+                                                                                                                    {doc.createdDate ? <span>{doc.createdDate}</span> : <span>-</span>}
                                                                                                                 </div>
                                                                                                             ))}
                                                                                                         </div>

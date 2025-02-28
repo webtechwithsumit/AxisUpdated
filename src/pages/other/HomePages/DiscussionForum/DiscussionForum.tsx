@@ -128,12 +128,11 @@ const DiscussionForum = () => {
         }
     };
 
-    const handleMarkAsResolved = async (discussionFormId: any) => {
+    const handleMarkAsResolved = async () => {
         try {
-            // const formData = discussion!.getDiscussionForms[0];
 
             const payload = {
-                productID: discussionFormId,
+                productID: id,
                 departmentName: user?.departmentName,
                 status: 1,
             };
@@ -283,8 +282,9 @@ const DiscussionForum = () => {
                                                 </td>
                                                 <td className=''>
                                                     <div className="text-center">
-                                                        {lastDiscussionEntry?.status !== 1 &&
-                                                            <Button variant="success" onClick={saveComment} className='me-2'>Save Comment</Button>
+                                                        {lastDiscussionEntry?.status !== 1 ?
+                                                            <Button variant="success" onClick={saveComment} className='me-2'>Save Comment</Button> :
+                                                            <div className='text-white btn btn-success'> Query Resolved</div>
                                                         }
                                                         {user?.employeeName === discussion.getDiscussionForms[0]?.createdBy ? (
                                                             // <Button
@@ -296,7 +296,7 @@ const DiscussionForum = () => {
                                                             <Button
                                                                 variant={lastDiscussionEntry?.status === 1 ? "secondary" : "info"}
                                                                 disabled={lastDiscussionEntry?.status === 1}
-                                                                onClick={() => lastDiscussionEntry?.status !== 1 && handleMarkAsResolved(lastDiscussionEntry?.id)}
+                                                                onClick={() => lastDiscussionEntry?.status !== 1 && handleMarkAsResolved()}
                                                             >
                                                                 {lastDiscussionEntry?.status === 1 ? "Resolved" : "Mark as Resolved"}
                                                             </Button>

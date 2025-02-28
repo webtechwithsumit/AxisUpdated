@@ -670,7 +670,7 @@ const ProductMasterInsert = () => {
                                                             {documentsProducts.filter(doc => doc.type === "Product Note").map((doc) => (
                                                                 <div key={doc.id}>
                                                                     {doc.fileUrls.map((fileUrl, index) => (
-                                                                        <div key={index}>
+                                                                        <div key={index} className='d-flex justify-content-between'>
                                                                             <Button className='p-0'
                                                                                 variant="link"
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -678,6 +678,7 @@ const ProductMasterInsert = () => {
                                                                                 <i className="ri-download-2-fill me-2"></i>
                                                                                 {getFileName(doc.files)}
                                                                             </Button>
+                                                                            <span>{doc.createdDate}</span>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -688,7 +689,7 @@ const ProductMasterInsert = () => {
                                                             {documentsProducts.filter(doc => doc.type === "Internal Financial Control IFC").map((doc) => (
                                                                 <div key={doc.id}>
                                                                     {doc.fileUrls.map((fileUrl, index) => (
-                                                                        <div key={index}>
+                                                                        <div key={index} className='d-flex justify-content-between'>
                                                                             <Button className='p-0'
                                                                                 variant="link"
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -696,6 +697,7 @@ const ProductMasterInsert = () => {
                                                                                 <i className="ri-download-2-fill me-2"></i>
                                                                                 {getFileName(doc.files)}
                                                                             </Button>
+                                                                            <span>{doc.createdDate}</span>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -705,7 +707,7 @@ const ProductMasterInsert = () => {
                                                             {documentsProducts.filter(doc => doc.type === "Final Signed Note").map((doc) => (
                                                                 <div key={doc.id}>
                                                                     {doc.fileUrls.map((fileUrl, index) => (
-                                                                        <div key={index}>
+                                                                        <div key={index} className='d-flex justify-content-between'>
                                                                             <Button className='p-0'
                                                                                 variant="link"
                                                                                 onClick={() => downloadFiles(fileUrl, doc.files.split('\\').pop())}
@@ -713,6 +715,7 @@ const ProductMasterInsert = () => {
                                                                                 <i className="ri-download-2-fill me-2"></i>
                                                                                 {getFileName(doc.files)}
                                                                             </Button>
+                                                                            <span>{doc.createdDate}</span>
                                                                         </div>
                                                                     ))}
                                                                 </div>

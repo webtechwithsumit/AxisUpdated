@@ -22,6 +22,7 @@ interface Product {
     fileUpload: string;
     createdBy: string;
     createdDate: string;
+    queryCount: string;
     updatedBy: string;
 }
 
@@ -59,6 +60,7 @@ const NewProductPendingCirculation = () => {
         { id: 'mobileNumber', label: 'Mobile Number', visible: true },
         { id: 'createdDate', label: 'Start Date', visible: true },
         { id: 'dayslappesd', label: 'Day Laps', visible: true },
+        { id: 'queryCount', label: 'Query Count', visible: true },
         { id: 'uploadedOn', label: 'SignOff By Department', visible: true },
     ]);
 
@@ -213,10 +215,12 @@ const NewProductPendingCirculation = () => {
                                                                         <tr key={item.id}>
                                                                             <td>{(currentPage - 1) * 10 + index + 1}</td>
                                                                             {columns.filter(col => col.visible).map((col) => (
-                                                                                <td key={col.id}>
-
-
-
+                                                                                <td key={col.id}
+                                                                                    className={
+                                                                                        col.id === 'queryCount' ? 'text-center' :
+                                                                                            ''
+                                                                                    }
+                                                                                >
                                                                                     {col.id === 'createdDate' ? (
                                                                                         <DateFormatter dateString={item.createdDate} />
                                                                                     ) : (item[col.id as keyof Product] as string | number)

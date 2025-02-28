@@ -6,8 +6,11 @@ type DateFormatterProps = {
 
 const formatDate = (isoString: string): string => {
     const date = new Date(isoString);
-    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "short", day: "2-digit" };
-    return date.toLocaleDateString("en-US", options).replace(",", "");
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensure two digits
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure two digits
+
+    return `${year}-${month}-${day}`;
 };
 
 const DateFormatter: React.FC<DateFormatterProps> = ({ dateString }) => {
